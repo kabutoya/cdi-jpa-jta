@@ -15,22 +15,7 @@ public class TestApplicationServiceTest {
 
     @ClassRule
     public static final TestRule RULE = RuleChain.outerRule(new NamingRule()).around(new WeldRule());
-//    public static final NamingRule namingRule = new NamingRule();
 
-//    private Weld weld;
-//    private WeldContainer container;
-//
-//    @Before
-//    public void before() {
-//        weld = new Weld();
-//        container = weld.initialize();
-//    }
-//
-//    @After
-//    public void after() {
-//        weld.shutdown();
-//    }
-//
     @Test
     public void test1() {
         assertThat("sample test.", "actual", not(equalTo("expected")));

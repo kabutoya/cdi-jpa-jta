@@ -9,9 +9,13 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import org.slf4j.Logger;
 
 @ApplicationScoped
 public class EntityManagerProducer {
+
+    @Inject
+    private Logger logger;
 
     @Inject
     private EntityManagerFactory emf;
@@ -19,14 +23,24 @@ public class EntityManagerProducer {
     @Dependent
     @Produces
     public EntityManager produce() {
-        return EntityManagerProxy.newInstance(emf.createEntityManager());
+        EntityManager em = EntityManagerProxy.newProxyInstance(emf.createEntityManager());
+        if (logger.isDebugEnabled()) {
+// TODO
+//            if (Proxy.isProxyClass(em.getClass())) {
+//                logger.debug("{} -> {}", EntityManager.class.getName(), em.getClass().getName());
+//            } else {
+//                logger.debug("{} -> {}", EntityManager.class.getName(), em.getClass().getName());
+//            }
+            logger.debug("{} -> {}", EntityManager.class.getName(), em.getClass().getName());
+        }
+        return em;
     }
 
     private static class EntityManagerProxy implements InvocationHandler {
 
         private final EntityManager em;
 
-        public static EntityManager newInstance(EntityManager em) {
+        public static EntityManager newProxyInstance(EntityManager em) {
             return (EntityManager) Proxy.newProxyInstance(
                     em.getClass().getClassLoader(), new Class<?>[]{EntityManager.class}, new EntityManagerProxy(em));
         }
