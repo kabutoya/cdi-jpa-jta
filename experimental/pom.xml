@@ -13,133 +13,76 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- External JavaEE spec APIs (not part of the JBoss JavaEE Specs project) -->
         <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
+            <groupId>org.jboss.weld.se</groupId>
+            <artifactId>weld-se</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.jws</groupId>
-            <artifactId>jsr181-api</artifactId>
+            <groupId>org.jboss.narayana.jta</groupId>
+            <artifactId>narayana-jta</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sun.mail</groupId>
-            <artifactId>javax.mail</artifactId>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-transaction-spi</artifactId>
+            <!--
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.spec.javax.transaction</groupId>
+                    <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+                </exclusion>
+            </exclusions>
+            -->
         </dependency>
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
+            <groupId>org.jboss.naming</groupId>
+            <artifactId>jnpserver</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
-        </dependency>
-        <!-- JBoss JavaEE API Specs Projects -->
-        <dependency>
-            <groupId>org.jboss.spec.javax.annotation</groupId>
-            <artifactId>jboss-annotations-api_1.2_spec</artifactId>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jboss.spec.javax.batch</groupId>
-            <artifactId>jboss-batch-api_1.0_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.ejb</groupId>
-            <artifactId>jboss-ejb-api_3.2_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.el</groupId>
-            <artifactId>jboss-el-api_3.0_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.enterprise.concurrent</groupId>
-            <artifactId>jboss-concurrency-api_1.0_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.faces</groupId>
-            <artifactId>jboss-jsf-api_2.2_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.interceptor</groupId>
-            <artifactId>jboss-interceptors-api_1.2_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.json</groupId>
-            <artifactId>jboss-json-api_1.0_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.management.j2ee</groupId>
-            <artifactId>jboss-j2eemgmt-api_1.1_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.resource</groupId>
-            <artifactId>jboss-connector-api_1.7_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.rmi</groupId>
-            <artifactId>jboss-rmi-api_1.0_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.security.jacc</groupId>
-            <artifactId>jboss-jacc-api_1.5_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.security.auth.message</groupId>
-            <artifactId>jboss-jaspi-api_1.1_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.jms</groupId>
-            <artifactId>jboss-jms-api_2.0_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.servlet</groupId>
-            <artifactId>jboss-servlet-api_3.1_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.servlet.jsp</groupId>
-            <artifactId>jboss-jsp-api_2.3_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.servlet.jstl</groupId>
-            <artifactId>jboss-jstl-api_1.2_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.2_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>jaxrs-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.websocket</groupId>
-            <artifactId>jboss-websocket-api_1.1_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.xml.bind</groupId>
-            <artifactId>jboss-jaxb-api_2.2_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.xml.soap</groupId>
-            <artifactId>jboss-saaj-api_1.3_spec</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.xml.ws</groupId>
-            <artifactId>jboss-jaxws-api_2.2_spec</artifactId>
+            <groupId>org.jboss</groupId>
+            <artifactId>jandex</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Temporary... -->
+        <!--
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.7.1.RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+        -->
     </dependencies>
 
 </project>
