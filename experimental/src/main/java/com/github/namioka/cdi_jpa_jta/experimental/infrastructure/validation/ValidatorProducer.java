@@ -15,9 +15,9 @@ public class ValidatorProducer {
     private Logger logger;
 
     @Inject
-    private ValidatorFactory validatorFactory;
+    private ValidatorFactory validatorFactory; // TODO thread safe?
 
-    @ApplicationScoped
+    @ApplicationScoped // TODO thread safe?
     @Produces
     public Validator produce() {
         Validator validator = validatorFactory.getValidator();
