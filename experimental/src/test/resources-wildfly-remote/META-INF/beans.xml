@@ -3,11 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
        version="1.1" bean-discovery-mode="annotated">
-    <!-- http://docs.oracle.com/javaee/7/tutorial/doc/cdi-adv001.htm#CACDCFDE -->
 
     <alternatives>
-        <class>com.github.namioka.cdi_jpa_jta.experimental.infrastructure.jpa.ApplicationManagedEntityManagerFactoryProducer</class>
-        <class>com.github.namioka.cdi_jpa_jta.experimental.infrastructure.jpa.ApplicationManagedEntityManagerProducer</class>
+        <class>com.github.namioka.cdi_jpa_jta.experimental.infrastructure.jpa.ContainerManagedEntityManagerProducer</class>
     </alternatives>
 
 </beans>

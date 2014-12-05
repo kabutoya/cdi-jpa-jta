@@ -8,7 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.naming.Reference;
 import javax.sql.DataSource;
-import org.apache.derby.jdbc.EmbeddedDataSource;
+import org.h2.jdbcx.JdbcDataSource;
 import org.jnp.interfaces.NamingContext;
 import org.jnp.interfaces.NamingContextFactory;
 import org.jnp.server.NamingServer;
@@ -32,6 +32,9 @@ public class NamingRule extends ExternalResource {
     @Override
     protected void before() throws Throwable {
         final InitialContext ic = new InitialContext();
+        ic.createSubcontext("java:jboss");
+        ic.createSubcontext("java:jboss/datasources");
+
         // com.arjuna.ats.jta.utils.JNDIManager.bindJTAImplementations(ic);
         // -> Actually the following...
         final String transactionManagerClassName = TransactionManagerImple.class.getName();
@@ -40,9 +43,15 @@ public class NamingRule extends ExternalResource {
         ic.bind("java:/UserTransaction", new Reference(userTransactionClassName, userTransactionClassName, null));
         ic.bind("java:/TransactionSynchronizationRegistry", TransactionSynchronizationRegistryImple.class.newInstance());
 
-        final DataSource ds = new EmbeddedDataSource();
-        ((EmbeddedDataSource) ds).setDatabaseName("memory:test_DB;create=true");
-        ic.bind("java:/test_DS", ds);
+//        final DataSource ds = new EmbeddedDataSource();
+//        ((EmbeddedDataSource) ds).setDatabaseName("memory:test_DB;create=true");
+//        ic.bind("java:/test_DS", ds);
+//
+        final DataSource ds = new JdbcDataSource();
+        ((JdbcDataSource) ds).setURL("jdbc:h2:mem:test;MODE=Oracle;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
+        ((JdbcDataSource) ds).setUser("sa");
+        ((JdbcDataSource) ds).setPassword("");
+        ic.bind("java:jboss/datasources/ExampleDS", ds);
     }
 
     @Override

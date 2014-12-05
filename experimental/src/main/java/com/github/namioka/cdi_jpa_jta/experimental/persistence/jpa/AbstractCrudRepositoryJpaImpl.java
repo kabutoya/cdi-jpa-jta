@@ -1,4 +1,4 @@
-package com.github.namioka.cdi_jpa_jta.experimental.infrastructure.jpa;
+package com.github.namioka.cdi_jpa_jta.experimental.persistence.jpa;
 
 import com.github.namioka.cdi_jpa_jta.experimental.domain.conception.CrudRepository;
 import com.github.namioka.cdi_jpa_jta.experimental.domain.conception.Persistable;

@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.Alternative;
+import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -12,7 +14,8 @@ import javax.persistence.EntityManagerFactory;
 import org.slf4j.Logger;
 
 @ApplicationScoped
-public class EntityManagerProducer {
+@Alternative
+public class ApplicationManagedEntityManagerProducer {
 
     @Inject
     private Logger logger;
@@ -34,6 +37,9 @@ public class EntityManagerProducer {
             logger.debug("{} -> {}", EntityManager.class.getName(), em.getClass().getName());
         }
         return em;
+    }
+
+    public void dispose(@Disposes EntityManager em) {
     }
 
     private static class EntityManagerProxy implements InvocationHandler {
