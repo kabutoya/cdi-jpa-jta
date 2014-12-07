@@ -19,10 +19,12 @@
                 <groupId>org.bsc.maven</groupId>
                 <artifactId>maven-processor-plugin</artifactId>
             </plugin>
+            <!--
             <plugin>
                 <groupId>com.mysema.maven</groupId>
                 <artifactId>apt-maven-plugin</artifactId>
             </plugin>
+            -->
         </plugins>
     </build>
 
@@ -245,14 +247,22 @@
             <artifactId>snakeyaml</artifactId>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>com.mysema.querydsl</groupId>
             <artifactId>querydsl-apt</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.mysema.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        -->
 
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
