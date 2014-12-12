@@ -24,7 +24,9 @@ public class TestApplicationServiceTest {
     @Test
     public void test2() {
         TestApplicationService testApplicationService = CDI.current().select(TestApplicationService.class).get();
-        testApplicationService.execute1();
+        testApplicationService.execute1(null, "You,", "Love Beer?");
+        testApplicationService.execute1(1L, "You,", "Love Sake?");
+        testApplicationService.execute1(1L, "You,", "Love Wine?");
         testApplicationService.execute2();
     }
 }

@@ -1,38 +1,39 @@
 package com.github.namioka.cdi_jpa_jta.experimental.domain.generic_sub.test;
 
-import com.github.namioka.cdi_jpa_jta.experimental.domain.conception.Persistable;
+import com.github.namioka.cdi_jpa_jta.experimental.domain.concept.ReferenceObject;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Version;
+import javax.validation.Valid;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@ToString
-public class Test implements Persistable<Long> {
+@EqualsAndHashCode @ToString @Getter
+public class Test implements ReferenceObject<Test, Long> {
 
     private static final long serialVersionUID = 1L;
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter
     private Long id;
 
-    @NotNull
-    @Getter @Setter
-    private String value1;
+    @Version
+    private Long version;
 
-    @NotNull
-    @Getter @Setter
-    private String value2;
+    @Embedded
+    @Valid
+    @Setter
+    private TestValue testValue;
 
-    private Test() {
+    public Test(TestValue testValue) {
+        this.testValue = testValue;
     }
 
-    public Test(String value1, String value2) {
-        this.value1 = value1;
-        this.value2 = value2;
+    Test() {
     }
 }
