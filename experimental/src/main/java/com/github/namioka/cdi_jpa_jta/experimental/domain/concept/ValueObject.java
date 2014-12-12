@@ -2,9 +2,9 @@ package com.github.namioka.cdi_jpa_jta.experimental.domain.concept;
 
 import java.io.Serializable;
 
-public interface ValueObject<T> extends Serializable {
+public interface ValueObject<T extends ValueObject<T>> extends Serializable {
 
-    default boolean sameValueAs(T other) {
+    default boolean sameValueAs(final T other) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
