@@ -96,6 +96,16 @@ public class SpecificationTest {
             //p = Pattern.compile("^[A-Za-z]+$");
             p = Pattern.compile("[A-Za-z]");
         }
+
+        @Override
+        public boolean isSpecialCaseOf(Specification<String> specification) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public boolean isGeneralizationOf(Specification<String> specification) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
 
     //@ToString
@@ -105,16 +115,34 @@ public class SpecificationTest {
             //p = Pattern.compile("^[0-9]+$");
             p = Pattern.compile("[0-9]");
         }
+
+        @Override
+        public boolean isSpecialCaseOf(Specification<String> specification) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public boolean isGeneralizationOf(Specification<String> specification) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
 
     //@ToString
     private static class SymbolSpecification<String> extends StringTypeSpecification<String> {
 
         public SymbolSpecification() {
-            // http://www.asciitable.com/
-            // http://www.ascii-code.com/
             //p = Pattern.compile("^[@]+$");
             p = Pattern.compile("[@]");
+        }
+
+        @Override
+        public boolean isSpecialCaseOf(Specification<String> specification) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public boolean isGeneralizationOf(Specification<String> specification) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
 }

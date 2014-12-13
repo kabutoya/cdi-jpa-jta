@@ -31,6 +31,16 @@ public class ConjunctionSpecification<T> implements CompositeSpecification<T> {
     }
 
     @Override
+    public boolean isSpecialCaseOf(Specification<T> specification) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean isGeneralizationOf(Specification<T> specification) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
     public CompositeSpecification<T> remainderUnsatisfiedBy(final T candidateObject) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
