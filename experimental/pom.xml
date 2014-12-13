@@ -314,6 +314,10 @@
             <artifactId>hibernate-validator-cdi</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -351,13 +355,19 @@
 
         <!-- Temporary... -->
         <!--
-        -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>1.7.1.RELEASE</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.seasar.doma</groupId>
+            <artifactId>doma</artifactId>
+            <version>2.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        -->
     </dependencies>
 
 </project>
