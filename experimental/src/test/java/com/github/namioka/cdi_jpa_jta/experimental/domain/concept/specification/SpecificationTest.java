@@ -45,8 +45,9 @@ public class SpecificationTest {
         assertThat("", symbolSpecification.isSatisfiedBy("@"), is(true));
         assertThat("", symbolSpecification.isSatisfiedBy(""), is(false));
 
-        Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification.and(symbolSpecification));
-        //Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification, symbolSpecification);
+        //Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification.and(symbolSpecification));
+        //Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification).and(symbolSpecification);
+        Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification, symbolSpecification);
         //Specification<String> alphabetAndNumericAndSymbolSpecification = Specifications.and(alphabetSpecification, numericSpecification, symbolSpecification);
         if (log.isDebugEnabled()) {
             log.debug(alphabetAndNumericAndSymbolSpecification.toString());
@@ -61,6 +62,7 @@ public class SpecificationTest {
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy(""), is(false));
 
         //Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification.or(symbolSpecification));
+        //Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification).or(symbolSpecification);
         Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification, symbolSpecification);
         //Specification<String> alphabetOrNumericOrSymbolSpecification = Specifications.or(alphabetSpecification, numericSpecification, symbolSpecification);
         if (log.isDebugEnabled()) {

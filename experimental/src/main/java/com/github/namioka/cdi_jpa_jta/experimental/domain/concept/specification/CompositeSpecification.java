@@ -7,21 +7,14 @@ public interface CompositeSpecification<T> extends Specification<T> {
 
     List<Specification<T>> getComponents();
 
-    default CompositeSpecification<T> with(Specification<T>... specifications) {
-        final boolean DEBUG = true;
-        if (DEBUG) {
-            System.out.println("--------------------------------------------------------------------------------");
-            System.out.println(String.format("%s#with before", getClass().getSimpleName()));
-            getComponents().stream().forEach(s -> {
-                System.out.println(String.format("%s", s.getClass().getName()));
-            });
+    default CompositeSpecification<T> with(final Specification<T>... specifications) {
+        if (specifications == null || specifications.length == 0) {
+            throw new IllegalArgumentException("specifications must not be empty");
         }
-        getComponents().addAll(Arrays.asList(specifications));
-        if (DEBUG) {
-            System.out.println(String.format("%s#with after", getClass().getSimpleName()));
-            getComponents().stream().forEach(s -> {
-                System.out.println(String.format("%s", s.getClass().getName()));
-            });
+        if (specifications.length == 1) {
+            getComponents().add(specifications[0]);
+        } else {
+            getComponents().addAll(Arrays.asList(specifications));
         }
         return this;
     }
