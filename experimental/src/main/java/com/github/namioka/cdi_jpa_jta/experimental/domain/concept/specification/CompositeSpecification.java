@@ -7,10 +7,6 @@ public interface CompositeSpecification<T> extends Specification<T> {
 
     List<Specification<T>> getComponents();
 
-//    CompositeSpecification<T> with(Specification<T> specification);
-//
-//    CompositeSpecification<T> with(Specification<T>... specification);
-//
     default CompositeSpecification<T> with(Specification<T>... specifications) {
         final boolean DEBUG = true;
         if (DEBUG) {
@@ -31,56 +27,4 @@ public interface CompositeSpecification<T> extends Specification<T> {
     }
 
     CompositeSpecification<T> remainderUnsatisfiedBy(T candidateObject);
-
-//    @Slf4j @ToString
-//    public static abstract class AbstractCompositeSpecification<T> implements CompositeSpecification<T> {
-//
-//        protected final List<Specification<T>> components;
-//
-//        public AbstractCompositeSpecification() {
-//            this.components = new ArrayList<>();
-//        }
-//
-//        public AbstractCompositeSpecification(Specification<T>... specifications) {
-//            this();
-//            this.components.addAll(Arrays.asList(specifications));
-//        }
-//
-//        public AbstractCompositeSpecification(Specification<T> self, Specification<T>... specifications) {
-//            // TODO self == null ??
-//            this();
-//            // TODO with ??
-//            this.components.add(self);
-//            if (specifications != null && specifications.length > 0) {
-//                if (specifications.length == 1) {
-//                    this.components.add(specifications[0]);
-//                } else {
-//                    this.components.addAll(Arrays.asList(specifications));
-//                }
-//            }
-//        }
-//
-//        @Override
-//        public CompositeSpecification<T> with(Specification<T> specification) {
-//            if (log.isDebugEnabled()) {
-//                log.debug("--------------------------------------------------------------------------------");
-//                log.debug("{}#with before", getClass().getSimpleName());
-//                components.stream().forEach(s -> {
-//                    if (log.isDebugEnabled()) {
-//                        log.debug("{}", s.getClass().getName());
-//                    }
-//                });
-//            }
-//            components.add(specification);
-//            if (log.isDebugEnabled()) {
-//                log.debug("{}#with after", getClass().getSimpleName());
-//                components.stream().forEach(s -> {
-//                    if (log.isDebugEnabled()) {
-//                        log.debug("{}", s.getClass().getName());
-//                    }
-//                });
-//            }
-//            return this;
-//        }
-//    }
 }

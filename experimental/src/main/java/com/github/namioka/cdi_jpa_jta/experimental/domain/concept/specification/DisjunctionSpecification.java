@@ -7,20 +7,11 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j @ToString(callSuper = true)
-//public class DisjunctionSpecification<T> extends AbstractCompositeSpecification<T> {
 public class DisjunctionSpecification<T> implements CompositeSpecification<T> {
 
     @Getter
     private final List<Specification<T>> components = new ArrayList<>();
 
-//    public DisjunctionSpecification(Specification<T>... specifications) {
-//        super(specifications);
-//    }
-//
-//    public DisjunctionSpecification(Specification<T> self, Specification<T>... specifications) {
-//        super(self, specifications);
-//    }
-//
     @Override
     public boolean isSatisfiedBy(T candidateObject) {
         // http://martinfowler.com/apsupp/spec.pdf p13
