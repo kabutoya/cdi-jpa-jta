@@ -1,148 +1,230 @@
 package com.github.namioka.cdi_jpa_jta.experimental.domain.concept.specification;
 
+import static java.util.stream.Collectors.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 @Slf4j
 public class SpecificationTest {
 
-//    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper(); // create once, reuse
-//
+    // mvn clean test -Dmaven.test.failure.ignore
+    //
+    private static final AlphabetCharacterSpecification ABC__SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"A", "B", "C"});
+    private static final AlphabetCharacterSpecification AB___SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"A", "B"});
+    private static final AlphabetCharacterSpecification A_C__SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"A", "C"});
+    private static final AlphabetCharacterSpecification _BC__SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"B", "C"});
+    private static final AlphabetCharacterSpecification A____SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"A"});
+    private static final AlphabetCharacterSpecification _B___SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"B"});
+    private static final AlphabetCharacterSpecification __C__SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"C"});
+    private static final AlphabetCharacterSpecification ___X_SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"X"});
+
     @Test
-    public void test_isSatisfiedBy() throws JsonProcessingException {
-        AlphabetSpecification alphabetSpecification = new AlphabetSpecification();
-        assertThat("", alphabetSpecification.isSatisfiedBy("A0@"), is(true));
-        assertThat("", alphabetSpecification.isSatisfiedBy("A0"), is(true));
-        assertThat("", alphabetSpecification.isSatisfiedBy("A@"), is(true));
-        assertThat("", alphabetSpecification.isSatisfiedBy("0@"), is(false));
-        assertThat("", alphabetSpecification.isSatisfiedBy("A"), is(true));
-        assertThat("", alphabetSpecification.isSatisfiedBy("0"), is(false));
-        assertThat("", alphabetSpecification.isSatisfiedBy("@"), is(false));
-        assertThat("", alphabetSpecification.isSatisfiedBy(""), is(false));
-
-        NumericSpecification numericSpecification = new NumericSpecification();
-        assertThat("", numericSpecification.isSatisfiedBy("A0@"), is(true));
-        assertThat("", numericSpecification.isSatisfiedBy("A0"), is(true));
-        assertThat("", numericSpecification.isSatisfiedBy("A@"), is(false));
-        assertThat("", numericSpecification.isSatisfiedBy("0@"), is(true));
-        assertThat("", numericSpecification.isSatisfiedBy("A"), is(false));
-        assertThat("", numericSpecification.isSatisfiedBy("0"), is(true));
-        assertThat("", numericSpecification.isSatisfiedBy("@"), is(false));
-        assertThat("", numericSpecification.isSatisfiedBy(""), is(false));
-
-        SymbolSpecification symbolSpecification = new SymbolSpecification();
-        assertThat("", symbolSpecification.isSatisfiedBy("A0@"), is(true));
-        assertThat("", symbolSpecification.isSatisfiedBy("A0"), is(false));
-        assertThat("", symbolSpecification.isSatisfiedBy("A@"), is(true));
-        assertThat("", symbolSpecification.isSatisfiedBy("0@"), is(true));
-        assertThat("", symbolSpecification.isSatisfiedBy("A"), is(false));
-        assertThat("", symbolSpecification.isSatisfiedBy("0"), is(false));
-        assertThat("", symbolSpecification.isSatisfiedBy("@"), is(true));
-        assertThat("", symbolSpecification.isSatisfiedBy(""), is(false));
-
-        //Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification.and(symbolSpecification));
-        //Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification).and(symbolSpecification);
-        Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification, symbolSpecification);
-        //Specification<String> alphabetAndNumericAndSymbolSpecification = Specifications.and(alphabetSpecification, numericSpecification, symbolSpecification);
-        if (log.isDebugEnabled()) {
-            log.debug(alphabetAndNumericAndSymbolSpecification.toString());
-        }
-        assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("A0@"), is(true));
-        assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("A0"), is(false));
-        assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("A@"), is(false));
-        assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("0@"), is(false));
-        assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("A"), is(false));
-        assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("0"), is(false));
-        assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("@"), is(false));
-        assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy(""), is(false));
-
-        //Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification.or(symbolSpecification));
-        //Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification).or(symbolSpecification);
-        Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification, symbolSpecification);
-        //Specification<String> alphabetOrNumericOrSymbolSpecification = Specifications.or(alphabetSpecification, numericSpecification, symbolSpecification);
-        if (log.isDebugEnabled()) {
-            log.debug(alphabetOrNumericOrSymbolSpecification.toString());
-        }
-        assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("A0@"), is(true));
-        assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("A0"), is(true));
-        assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("A@"), is(true));
-        assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("0@"), is(true));
-        assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("A"), is(true));
-        assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("0"), is(true));
-        assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("@"), is(true));
-        assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy(""), is(false));
+    public void test_isSatisfiedBy() {
+        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("ABC"), is(true));
+        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("AB"), is(true));
+        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("AC"), is(true));
+        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("BC"), is(true));
+        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("A"), is(true));
+        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("B"), is(true));
+        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("C"), is(true));
+        assertThat("", ABC__SPECIFICATION.isSatisfiedBy(""), is(false));
+        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("X"), is(false));
     }
 
-    //@ToString
-    private abstract static class StringTypeSpecification<String> implements LeafSpecification<String> {
+    @Test
+    public void test_isSpecialCaseOf() {
+        assertThat("", ABC__SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(true));
+        assertThat("", ABC__SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(true));
+        assertThat("", ABC__SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(true));
+        assertThat("", ABC__SPECIFICATION.isSpecialCaseOf(_BC__SPECIFICATION), is(true));
+        assertThat("", ABC__SPECIFICATION.isSpecialCaseOf(A____SPECIFICATION), is(true));
+        assertThat("", ABC__SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(true));
+        assertThat("", ABC__SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(true));
+        assertThat("", ABC__SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
 
-        protected Pattern p;
+        assertThat("", AB___SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
+        assertThat("", AB___SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(true));
+        assertThat("", AB___SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(false));
+        assertThat("", AB___SPECIFICATION.isSpecialCaseOf(_BC__SPECIFICATION), is(false));
+        assertThat("", AB___SPECIFICATION.isSpecialCaseOf(A____SPECIFICATION), is(true));
+        assertThat("", AB___SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(true));
+        assertThat("", AB___SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(false));
+        assertThat("", AB___SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
+        assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(false));
+        assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(true));
+        assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(_BC__SPECIFICATION), is(false));
+        assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(A____SPECIFICATION), is(true));
+        assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(false));
+        assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(true));
+        assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
+        assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(false));
+        assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(false));
+        assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(_BC__SPECIFICATION), is(true));
+        assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(A____SPECIFICATION), is(false));
+        assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(true));
+        assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(true));
+        assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", A____SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
+        assertThat("", A____SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(false));
+        assertThat("", A____SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(false));
+        assertThat("", A____SPECIFICATION.isSpecialCaseOf(_BC__SPECIFICATION), is(false));
+        assertThat("", A____SPECIFICATION.isSpecialCaseOf(A____SPECIFICATION), is(true));
+        assertThat("", A____SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(false));
+        assertThat("", A____SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(false));
+        assertThat("", A____SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", _B___SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
+        assertThat("", _B___SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(false));
+        assertThat("", _B___SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(false));
+        assertThat("", _B___SPECIFICATION.isSpecialCaseOf(_BC__SPECIFICATION), is(false));
+        assertThat("", _B___SPECIFICATION.isSpecialCaseOf(A____SPECIFICATION), is(false));
+        assertThat("", _B___SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(true));
+        assertThat("", _B___SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(false));
+        assertThat("", _B___SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", __C__SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
+        assertThat("", __C__SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(false));
+        assertThat("", __C__SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(false));
+        assertThat("", __C__SPECIFICATION.isSpecialCaseOf(_BC__SPECIFICATION), is(false));
+        assertThat("", __C__SPECIFICATION.isSpecialCaseOf(A____SPECIFICATION), is(false));
+        assertThat("", __C__SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(false));
+        assertThat("", __C__SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(true));
+        assertThat("", __C__SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(_BC__SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(A____SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(true));
+    }
+
+    @Test
+    public void test_isGeneralizationOf() {
+        assertThat("", ABC__SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
+        assertThat("", ABC__SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(false));
+        assertThat("", ABC__SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(false));
+        assertThat("", ABC__SPECIFICATION.isGeneralizationOf(_BC__SPECIFICATION), is(false));
+        assertThat("", ABC__SPECIFICATION.isGeneralizationOf(A____SPECIFICATION), is(false));
+        assertThat("", ABC__SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
+        assertThat("", ABC__SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
+        assertThat("", ABC__SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", AB___SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
+        assertThat("", AB___SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(true));
+        assertThat("", AB___SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(false));
+        assertThat("", AB___SPECIFICATION.isGeneralizationOf(_BC__SPECIFICATION), is(false));
+        assertThat("", AB___SPECIFICATION.isGeneralizationOf(A____SPECIFICATION), is(false));
+        assertThat("", AB___SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
+        assertThat("", AB___SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
+        assertThat("", AB___SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", A_C__SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
+        assertThat("", A_C__SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(false));
+        assertThat("", A_C__SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(true));
+        assertThat("", A_C__SPECIFICATION.isGeneralizationOf(_BC__SPECIFICATION), is(false));
+        assertThat("", A_C__SPECIFICATION.isGeneralizationOf(A____SPECIFICATION), is(false));
+        assertThat("", A_C__SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
+        assertThat("", A_C__SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
+        assertThat("", A_C__SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", _BC__SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
+        assertThat("", _BC__SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(false));
+        assertThat("", _BC__SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(false));
+        assertThat("", _BC__SPECIFICATION.isGeneralizationOf(_BC__SPECIFICATION), is(true));
+        assertThat("", _BC__SPECIFICATION.isGeneralizationOf(A____SPECIFICATION), is(false));
+        assertThat("", _BC__SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
+        assertThat("", _BC__SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
+        assertThat("", _BC__SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", A____SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
+        assertThat("", A____SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(true));
+        assertThat("", A____SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(true));
+        assertThat("", A____SPECIFICATION.isGeneralizationOf(_BC__SPECIFICATION), is(false));
+        assertThat("", A____SPECIFICATION.isGeneralizationOf(A____SPECIFICATION), is(true));
+        assertThat("", A____SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
+        assertThat("", A____SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
+        assertThat("", A____SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", _B___SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
+        assertThat("", _B___SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(true));
+        assertThat("", _B___SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(false));
+        assertThat("", _B___SPECIFICATION.isGeneralizationOf(_BC__SPECIFICATION), is(true));
+        assertThat("", _B___SPECIFICATION.isGeneralizationOf(A____SPECIFICATION), is(false));
+        assertThat("", _B___SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(true));
+        assertThat("", _B___SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
+        assertThat("", _B___SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", __C__SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
+        assertThat("", __C__SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(false));
+        assertThat("", __C__SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(true));
+        assertThat("", __C__SPECIFICATION.isGeneralizationOf(_BC__SPECIFICATION), is(true));
+        assertThat("", __C__SPECIFICATION.isGeneralizationOf(A____SPECIFICATION), is(false));
+        assertThat("", __C__SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
+        assertThat("", __C__SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(true));
+        assertThat("", __C__SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
+
+        assertThat("", ___X_SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isGeneralizationOf(_BC__SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isGeneralizationOf(A____SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
+        assertThat("", ___X_SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(true));
+    }
+
+    private static class AlphabetCharacterSpecification implements ValueBoundSpecification<String, String[]> {
+
+        @Getter
+        protected final String[] value;
+        protected final Pattern p;
+
+        public AlphabetCharacterSpecification(String[] value) {
+            this.value = value;
+            this.p = Pattern.compile(String.format("^[%s]+$", Stream.of(value).collect(joining())));
+        }
+
+        @Override
+        public String getAttributeName() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
 
         @Override
         public boolean isSatisfiedBy(String candidateObject) {
-            return p.matcher((CharSequence) candidateObject).find();
-        }
-    }
-
-    //@ToString
-    private static class AlphabetSpecification<String> extends StringTypeSpecification<String> {
-
-        public AlphabetSpecification() {
-            //p = Pattern.compile("^[A-Za-z]+$");
-            p = Pattern.compile("[A-Za-z]");
+            return p.matcher(candidateObject).find();
         }
 
         @Override
         public boolean isSpecialCaseOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            if (!(specification instanceof ValueBoundSpecification)) {
+                throw new IllegalArgumentException("specification must be instance of ValueBoundSpecification");
+            }
+            return Stream.of((String[]) ((ValueBoundSpecification) specification).getValue()).allMatch(ov -> Stream.of(value).anyMatch(tv -> ov.equals(tv)));
+
+            // TODO
+            //return specification.isGeneralizationOf(this);
         }
 
         @Override
         public boolean isGeneralizationOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
-
-    //@ToString
-    private static class NumericSpecification<String> extends StringTypeSpecification<String> {
-
-        public NumericSpecification() {
-            //p = Pattern.compile("^[0-9]+$");
-            p = Pattern.compile("[0-9]");
-        }
-
-        @Override
-        public boolean isSpecialCaseOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean isGeneralizationOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
-
-    //@ToString
-    private static class SymbolSpecification<String> extends StringTypeSpecification<String> {
-
-        public SymbolSpecification() {
-            //p = Pattern.compile("^[@]+$");
-            p = Pattern.compile("[@]");
-        }
-
-        @Override
-        public boolean isSpecialCaseOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public boolean isGeneralizationOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            if (!(specification instanceof ValueBoundSpecification)) {
+                throw new IllegalArgumentException("specification must be instance of ValueBoundSpecification");
+            }
+            return Stream.of(value).allMatch(tv -> Stream.of((String[]) ((ValueBoundSpecification) specification).getValue()).anyMatch(ov -> tv.equals(ov)));
         }
     }
 }
