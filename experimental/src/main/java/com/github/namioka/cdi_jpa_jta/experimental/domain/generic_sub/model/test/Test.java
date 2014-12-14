@@ -30,7 +30,7 @@ public class Test implements ReferenceObject<Test, Long> {
     @Setter
     private TestValue testValue;
 
-    public Test(TestValue testValue) {
+    public Test(final TestValue testValue) {
         this.testValue = testValue;
     }
 

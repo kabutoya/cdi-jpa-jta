@@ -29,7 +29,7 @@ public abstract class AbstractRepositoryJpaImpl<T extends ReferenceObject<T, ID>
     }
 
     @Override
-    public <R extends T> R store(R entity) {
+    public <R extends T> R store(final R entity) {
         if (entity.isNew()) {
             em.persist(entity);
             return entity;
@@ -49,7 +49,7 @@ public abstract class AbstractRepositoryJpaImpl<T extends ReferenceObject<T, ID>
     }
 
     @Override
-    public T find(ID id) {
+    public T find(final ID id) {
         return em.find(entityClass, id);
     }
 

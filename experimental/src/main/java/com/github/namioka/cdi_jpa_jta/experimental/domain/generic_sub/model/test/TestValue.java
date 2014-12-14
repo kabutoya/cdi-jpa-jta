@@ -18,7 +18,7 @@ public class TestValue implements ValueObject<TestValue> {
     @NotNull
     private String value2;
 
-    public TestValue(String value1, String value2) {
+    public TestValue(final String value1, final String value2) {
         this.value1 = value1;
         this.value2 = value2;
     }

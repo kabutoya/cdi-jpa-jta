@@ -25,11 +25,10 @@ public class TestApplicationService {
     private TestRepository testRepository;
 
     @Transactional
-    public void execute1(Long id, String value1, String value2) {
+    public void execute1(final Long id, final String value1, final String value2) {
         Test test;
 
         if (id == null) {
-            // Actually, entity(=Test) is created by user input...
             test = new Test(new TestValue(value1, value2));
         } else {
             test = testRepository.find(id);
@@ -40,7 +39,6 @@ public class TestApplicationService {
             throw new IllegalArgumentException("test is null");
         }
 
-        // Validate entity before saving...
         Set<ConstraintViolation<Test>> constraintViolations = validator.validate(test);
         if (!constraintViolations.isEmpty()) {
             constraintViolations.stream().forEach(v -> {

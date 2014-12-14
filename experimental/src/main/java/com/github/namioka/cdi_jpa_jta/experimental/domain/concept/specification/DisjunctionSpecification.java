@@ -12,12 +12,12 @@ public class DisjunctionSpecification<T> implements CompositeSpecification<T> {
     @Getter
     private final List<Specification<T>> components = new ArrayList<>();
 
-    public DisjunctionSpecification() {
-        if (log.isDebugEnabled()) {
-            log.debug("constructed -> {}", getClass().getName());
-        }
-    }
-
+//    public DisjunctionSpecification() {
+//        if (log.isDebugEnabled()) {
+//            log.debug("constructed -> {}", getClass().getName());
+//        }
+//    }
+//
     @Override
     public boolean isSatisfiedBy(final T candidateObject) {
         // http://martinfowler.com/apsupp/spec.pdf p13
@@ -28,12 +28,12 @@ public class DisjunctionSpecification<T> implements CompositeSpecification<T> {
     }
 
     @Override
-    public boolean isSpecialCaseOf(Specification<T> specification) {
+    public boolean isSpecialCaseOf(final Specification<T> specification) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean isGeneralizationOf(Specification<T> specification) {
+    public boolean isGeneralizationOf(final Specification<T> specification) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

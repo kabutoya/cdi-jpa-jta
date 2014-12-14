@@ -12,12 +12,12 @@ public class ConjunctionSpecification<T> implements CompositeSpecification<T> {
     @Getter
     private final List<Specification<T>> components = new ArrayList<>();
 
-    public ConjunctionSpecification() {
-        if (log.isDebugEnabled()) {
-            log.debug("constructed -> {}", getClass().getName());
-        }
-    }
-
+//    public ConjunctionSpecification() {
+//        if (log.isDebugEnabled()) {
+//            log.debug("constructed -> {}", getClass().getName());
+//        }
+//    }
+//
     @Override
     public boolean isSatisfiedBy(final T candidateObject) {
         // http://martinfowler.com/apsupp/spec.pdf p10
@@ -31,12 +31,12 @@ public class ConjunctionSpecification<T> implements CompositeSpecification<T> {
     }
 
     @Override
-    public boolean isSpecialCaseOf(Specification<T> specification) {
+    public boolean isSpecialCaseOf(final Specification<T> specification) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public boolean isGeneralizationOf(Specification<T> specification) {
+    public boolean isGeneralizationOf(final Specification<T> specification) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
