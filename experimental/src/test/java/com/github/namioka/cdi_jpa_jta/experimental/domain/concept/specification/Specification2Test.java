@@ -1,20 +1,16 @@
 package com.github.namioka.cdi_jpa_jta.experimental.domain.concept.specification;
 
-import static java.util.stream.Collectors.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 @Slf4j
-public class SpecificationTest {
+public class Specification2Test {
 
-    // mvn clean test -Dmaven.test.failure.ignore
-    //
     private static final AlphabetCharacterSpecification ABC__SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"A", "B", "C"});
     private static final AlphabetCharacterSpecification AB___SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"A", "B"});
     private static final AlphabetCharacterSpecification A_C__SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"A", "C"});
@@ -23,19 +19,6 @@ public class SpecificationTest {
     private static final AlphabetCharacterSpecification _B___SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"B"});
     private static final AlphabetCharacterSpecification __C__SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"C"});
     private static final AlphabetCharacterSpecification ___X_SPECIFICATION = new AlphabetCharacterSpecification(new String[]{"X"});
-
-    @Test
-    public void test_isSatisfiedBy() {
-        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("ABC"), is(true));
-        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("AB"), is(true));
-        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("AC"), is(true));
-        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("BC"), is(true));
-        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("A"), is(true));
-        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("B"), is(true));
-        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("C"), is(true));
-        assertThat("", ABC__SPECIFICATION.isSatisfiedBy(""), is(false));
-        assertThat("", ABC__SPECIFICATION.isSatisfiedBy("X"), is(false));
-    }
 
     @Test
     public void test_isSpecialCaseOf() {
@@ -190,12 +173,12 @@ public class SpecificationTest {
     private static class AlphabetCharacterSpecification implements ValueBoundSpecification<String, String[]> {
 
         @Getter
-        protected final String[] value;
-        protected final Pattern p;
+        private final String[] value;
+        //private final Pattern p;
 
         public AlphabetCharacterSpecification(String[] value) {
             this.value = value;
-            this.p = Pattern.compile(String.format("^[%s]+$", Stream.of(value).collect(joining())));
+            //this.p = Pattern.compile(String.format("^[%s]+$", Stream.of(value).collect(joining())));
         }
 
         @Override
@@ -205,7 +188,8 @@ public class SpecificationTest {
 
         @Override
         public boolean isSatisfiedBy(String candidateObject) {
-            return p.matcher(candidateObject).find();
+            throw new UnsupportedOperationException("Not supported yet.");
+            //return p.matcher(candidateObject).find();
         }
 
         @Override
@@ -213,10 +197,13 @@ public class SpecificationTest {
             if (!(specification instanceof ValueBoundSpecification)) {
                 throw new IllegalArgumentException("specification must be instance of ValueBoundSpecification");
             }
-            return Stream.of((String[]) ((ValueBoundSpecification) specification).getValue()).allMatch(ov -> Stream.of(value).anyMatch(tv -> ov.equals(tv)));
-
-            // TODO
-            //return specification.isGeneralizationOf(this);
+            //return Stream.of((String[]) ((ValueBoundSpecification) specification).getValue()).allMatch(ov -> Stream.of(value).anyMatch(tv -> ov.equals(tv)));
+            //return Stream.of((String[]) ((ValueBoundSpecification) specification).getValue()).allMatch(ov -> {
+            //    return Stream.of(value).anyMatch(tv -> {
+            //        return ov.equals(tv);
+            //    });
+            //});
+            return specification.isGeneralizationOf(this);
         }
 
         @Override
@@ -224,7 +211,12 @@ public class SpecificationTest {
             if (!(specification instanceof ValueBoundSpecification)) {
                 throw new IllegalArgumentException("specification must be instance of ValueBoundSpecification");
             }
-            return Stream.of(value).allMatch(tv -> Stream.of((String[]) ((ValueBoundSpecification) specification).getValue()).anyMatch(ov -> tv.equals(ov)));
+            //return Stream.of(value).allMatch(tv -> Stream.of((String[]) ((ValueBoundSpecification) specification).getValue()).anyMatch(ov -> tv.equals(ov)));
+            return Stream.of(value).allMatch(tv -> {
+                return Stream.of((String[]) ((ValueBoundSpecification) specification).getValue()).anyMatch(ov -> {
+                    return tv.equals(ov);
+                });
+            });
         }
     }
 }

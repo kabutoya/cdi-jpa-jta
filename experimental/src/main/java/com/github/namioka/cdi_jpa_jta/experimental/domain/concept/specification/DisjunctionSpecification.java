@@ -24,7 +24,7 @@ public class DisjunctionSpecification<T> implements CompositeSpecification<T> {
         //
         // DisjunctionSpecification >> isSatisfiedBy: aCandidateObject
         //     ^ self components contains: [:each | each isSatisfiedBy: aCandidateObject ]
-        return components.stream().anyMatch((s) -> (s.isSatisfiedBy(candidateObject)));
+        return components.stream().anyMatch(s -> s.isSatisfiedBy(candidateObject));
     }
 
     @Override

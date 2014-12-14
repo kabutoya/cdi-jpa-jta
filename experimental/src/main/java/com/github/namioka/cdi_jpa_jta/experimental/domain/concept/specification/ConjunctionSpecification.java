@@ -27,7 +27,7 @@ public class ConjunctionSpecification<T> implements CompositeSpecification<T> {
         //         (each isSatisfiedBy: aCandidate) ifFalse: [^false]
         //         ]
         //         ^true
-        return components.stream().noneMatch((s) -> (!s.isSatisfiedBy(candidateObject)));
+        return components.stream().allMatch(s -> s.isSatisfiedBy(candidateObject));
     }
 
     @Override

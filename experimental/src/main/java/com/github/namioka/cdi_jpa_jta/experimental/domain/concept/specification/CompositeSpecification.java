@@ -1,6 +1,7 @@
 package com.github.namioka.cdi_jpa_jta.experimental.domain.concept.specification;
 
-import java.util.Arrays;
+import static java.util.Arrays.*;
+
 import java.util.List;
 
 public interface CompositeSpecification<T> extends Specification<T> {
@@ -11,13 +12,16 @@ public interface CompositeSpecification<T> extends Specification<T> {
         if (specifications == null || specifications.length == 0) {
             throw new IllegalArgumentException("specifications must not be empty");
         }
+
+        // TODO validation
         if (specifications.length == 1) {
             getComponents().add(specifications[0]);
         } else {
-            getComponents().addAll(Arrays.asList(specifications));
+            getComponents().addAll(asList(specifications));
         }
         return this;
     }
 
-    CompositeSpecification<T> remainderUnsatisfiedBy(T candidateObject);
+    // TODO should return CompositeSpecification<T> ??
+    Specification<T> remainderUnsatisfiedBy(T candidateObject);
 }
