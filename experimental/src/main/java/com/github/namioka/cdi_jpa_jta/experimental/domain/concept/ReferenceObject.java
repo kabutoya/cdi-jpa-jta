@@ -11,8 +11,6 @@ public interface ReferenceObject<T extends ReferenceObject<T, ID>, ID extends Se
     }
 
     default boolean sameIdentityAs(final T other) {
-        return (this.isNew() || (other == null || other.isNew()))
-                ? false
-                : this.getId().equals(other.getId());
+        return (isNew() || other == null || other.isNew()) ? false : getId().equals(other.getId());
     }
 }

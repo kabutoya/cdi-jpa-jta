@@ -16,11 +16,6 @@ public interface CompositeSpecification<T> extends Specification<T> {
         return this;
     }
 
-//    @Override
-//    default boolean isSatisfiedBy(final T candidate) {
-//        return remainderUnsatisfiedBy(candidate).getComponents().isEmpty();
-//    }
-//
     @Override
     default boolean isGeneralizationOf(final Specification<T> specification) {
         return getComponents().stream().allMatch(s -> s.isGeneralizationOf(specification));

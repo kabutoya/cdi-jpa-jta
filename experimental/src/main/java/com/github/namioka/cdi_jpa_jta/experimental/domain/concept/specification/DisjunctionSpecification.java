@@ -18,8 +18,6 @@ public class DisjunctionSpecification<T> implements CompositeSpecification<T> {
 
     @Override
     public CompositeSpecification<T> remainderUnsatisfiedBy(final T candidate) {
-        return (isSatisfiedBy(candidate))
-                ? new DisjunctionSpecification<>()
-                : this;
+        return (isSatisfiedBy(candidate)) ? new DisjunctionSpecification<>() : this;
     }
 }
