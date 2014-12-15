@@ -11,13 +11,16 @@ public class DisjunctionSpecification<T> implements CompositeSpecification<T> {
     @Getter
     private final List<Specification<T>> components = new ArrayList<>();
 
-    @Override
-    public boolean isSatisfiedBy(final T candidate) {
-        return getComponents().stream().anyMatch(s -> s.isSatisfiedBy(candidate));
-    }
-
+//    @Override
+//    public boolean isSatisfiedBy(final T candidate) {
+//        return getComponents().stream().anyMatch(s -> s.isSatisfiedBy(candidate));
+//    }
+//
     @Override
     public CompositeSpecification<T> remainderUnsatisfiedBy(final T candidate) {
-        return (isSatisfiedBy(candidate)) ? new DisjunctionSpecification<>() : this;
+        //return (isSatisfiedBy(candidate)) ? new DisjunctionSpecification<>() : this;
+        return getComponents().stream().anyMatch(s -> s.isSatisfiedBy(candidate))
+                ? new DisjunctionSpecification<>()
+                : this;
     }
 }

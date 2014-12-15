@@ -11,11 +11,11 @@ public class ConjunctionSpecification<T> implements CompositeSpecification<T> {
     @Getter
     private final List<Specification<T>> components = new ArrayList<>();
 
-    @Override
-    public boolean isSatisfiedBy(final T candidate) {
-        return getComponents().stream().allMatch(s -> s.isSatisfiedBy(candidate));
-    }
-
+//    @Override
+//    public boolean isSatisfiedBy(final T candidate) {
+//        return getComponents().stream().allMatch(s -> s.isSatisfiedBy(candidate));
+//    }
+//
     @Override
     public CompositeSpecification<T> remainderUnsatisfiedBy(final T candidate) {
         CompositeSpecification<T> unsatisfied = new ConjunctionSpecification<>();
