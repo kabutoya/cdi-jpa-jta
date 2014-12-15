@@ -44,8 +44,8 @@ public class Specification1Test {
         assertThat("", symbolSpecification.isSatisfiedBy(""), is(false));
 
         //Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification.and(symbolSpecification));
-        //Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification).and(symbolSpecification);
-        Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification, symbolSpecification);
+        Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification).and(symbolSpecification);
+        //Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification, symbolSpecification);
         //Specification<String> alphabetAndNumericAndSymbolSpecification = Specifications.and(alphabetSpecification, numericSpecification, symbolSpecification);
         if (log.isDebugEnabled()) {
             log.debug(alphabetAndNumericAndSymbolSpecification.toString());
@@ -60,8 +60,8 @@ public class Specification1Test {
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy(""), is(false));
 
         //Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification.or(symbolSpecification));
-        //Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification).or(symbolSpecification);
-        Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification, symbolSpecification);
+        Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification).or(symbolSpecification);
+        //Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification, symbolSpecification);
         //Specification<String> alphabetOrNumericOrSymbolSpecification = Specifications.or(alphabetSpecification, numericSpecification, symbolSpecification);
         if (log.isDebugEnabled()) {
             log.debug(alphabetOrNumericOrSymbolSpecification.toString());
@@ -77,7 +77,7 @@ public class Specification1Test {
     }
 
     //@ToString
-    private abstract static class StringTypeSpecification<String> implements LeafSpecification<String> {
+    private abstract static class StringTypeSpecification implements LeafSpecification<String> {
 
         protected Pattern p;
 
@@ -88,7 +88,7 @@ public class Specification1Test {
     }
 
     //@ToString
-    private static class AlphabetSpecification<String> extends StringTypeSpecification<String> {
+    private static class AlphabetSpecification extends StringTypeSpecification {
 
         public AlphabetSpecification() {
             //p = Pattern.compile("^[A-Za-z]+$");
@@ -97,17 +97,17 @@ public class Specification1Test {
 
         @Override
         public boolean isSpecialCaseOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
         public boolean isGeneralizationOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 
     //@ToString
-    private static class NumericSpecification<String> extends StringTypeSpecification<String> {
+    private static class NumericSpecification extends StringTypeSpecification {
 
         public NumericSpecification() {
             //p = Pattern.compile("^[0-9]+$");
@@ -116,17 +116,17 @@ public class Specification1Test {
 
         @Override
         public boolean isSpecialCaseOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
         public boolean isGeneralizationOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 
     //@ToString
-    private static class SymbolSpecification<String> extends StringTypeSpecification<String> {
+    private static class SymbolSpecification extends StringTypeSpecification {
 
         public SymbolSpecification() {
             //p = Pattern.compile("^[@]+$");
@@ -135,12 +135,12 @@ public class Specification1Test {
 
         @Override
         public boolean isSpecialCaseOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
         public boolean isGeneralizationOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 }

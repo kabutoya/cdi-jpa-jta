@@ -4,44 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j @ToString(callSuper = true)
+@ToString(callSuper = true)
 public class ConjunctionSpecification<T> implements CompositeSpecification<T> {
 
     @Getter
     private final List<Specification<T>> components = new ArrayList<>();
 
-//    public ConjunctionSpecification() {
-//        if (log.isDebugEnabled()) {
-//            log.debug("constructed -> {}", getClass().getName());
-//        }
-//    }
-//
     @Override
-    public boolean isSatisfiedBy(final T candidateObject) {
-        // http://martinfowler.com/apsupp/spec.pdf p10
-        //
-        // CompositeSpecification isSatisfiedBy: aCandidate
-        //         (self components do: [:each |
-        //         (each isSatisfiedBy: aCandidate) ifFalse: [^false]
-        //         ]
-        //         ^true
-        return components.stream().allMatch(s -> s.isSatisfiedBy(candidateObject));
+    public boolean isSatisfiedBy(final T candidate) {
+        return getComponents().stream().allMatch(s -> s.isSatisfiedBy(candidate));
     }
 
     @Override
-    public boolean isSpecialCaseOf(final Specification<T> specification) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public boolean isGeneralizationOf(final Specification<T> specification) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public CompositeSpecification<T> remainderUnsatisfiedBy(final T candidateObject) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public CompositeSpecification<T> remainderUnsatisfiedBy(final T candidate) {
+        CompositeSpecification<T> unsatisfied = new ConjunctionSpecification<>();
+        getComponents().stream().filter(s -> !s.isSatisfiedBy(candidate)).forEach(unsatisfied::with);
+        return unsatisfied;
     }
 }

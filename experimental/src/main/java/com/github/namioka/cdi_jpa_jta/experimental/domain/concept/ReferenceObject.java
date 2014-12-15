@@ -2,7 +2,7 @@ package com.github.namioka.cdi_jpa_jta.experimental.domain.concept;
 
 import java.io.Serializable;
 
-public interface ReferenceObject<T extends ReferenceObject<T, ID>, ID extends Serializable> extends Serializable { // Also known as "Entity".
+public interface ReferenceObject<T extends ReferenceObject<T, ID>, ID extends Serializable> extends Serializable {
 
     ID getId();
 
@@ -11,15 +11,8 @@ public interface ReferenceObject<T extends ReferenceObject<T, ID>, ID extends Se
     }
 
     default boolean sameIdentityAs(final T other) {
-        if (this.isNew()) {
-            return false;
-        } else {
-            //if (other != null && other instanceof ReferenceObject && !((ReferenceObject) other).isNew()) {
-            //    return this.getId().equals(((ReferenceObject) other).getId());
-            //} else {
-            //    return false;
-            //}
-            return (other != null && !other.isNew()) ? this.getId().equals(other.getId()) : false;
-        }
+        return (this.isNew() || (other == null || other.isNew()))
+                ? false
+                : this.getId().equals(other.getId());
     }
 }

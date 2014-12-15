@@ -182,30 +182,25 @@ public class Specification2Test {
         }
 
         @Override
-        public String getAttributeName() {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
         public boolean isSatisfiedBy(String candidateObject) {
             throw new UnsupportedOperationException("Not supported yet.");
             //return p.matcher(candidateObject).find();
         }
 
-        @Override
-        public boolean isSpecialCaseOf(Specification<String> specification) {
-            if (!(specification instanceof ValueBoundSpecification)) {
-                throw new IllegalArgumentException("specification must be instance of ValueBoundSpecification");
-            }
-            //return Stream.of((String[]) ((ValueBoundSpecification) specification).getValue()).allMatch(ov -> Stream.of(value).anyMatch(tv -> ov.equals(tv)));
-            //return Stream.of((String[]) ((ValueBoundSpecification) specification).getValue()).allMatch(ov -> {
-            //    return Stream.of(value).anyMatch(tv -> {
-            //        return ov.equals(tv);
-            //    });
-            //});
-            return specification.isGeneralizationOf(this);
-        }
-
+//        @Override
+//        public boolean isSpecialCaseOf(Specification<String> specification) {
+//            if (!(specification instanceof ValueBoundSpecification)) {
+//                throw new IllegalArgumentException("specification must be instance of ValueBoundSpecification");
+//            }
+//            //return Stream.of((String[]) ((ValueBoundSpecification) specification).getValue()).allMatch(ov -> Stream.of(value).anyMatch(tv -> ov.equals(tv)));
+//            //return Stream.of((String[]) ((ValueBoundSpecification) specification).getValue()).allMatch(ov -> {
+//            //    return Stream.of(value).anyMatch(tv -> {
+//            //        return ov.equals(tv);
+//            //    });
+//            //});
+//            return specification.isGeneralizationOf(this);
+//        }
+//
         @Override
         public boolean isGeneralizationOf(Specification<String> specification) {
             if (!(specification instanceof ValueBoundSpecification)) {

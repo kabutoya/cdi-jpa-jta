@@ -1,27 +1,33 @@
 package com.github.namioka.cdi_jpa_jta.experimental.domain.concept.specification;
 
-import static java.util.Arrays.*;
-
 import java.util.List;
 
 public interface CompositeSpecification<T> extends Specification<T> {
 
     List<Specification<T>> getComponents();
 
-    default CompositeSpecification<T> with(final Specification<T>... specifications) {
-        if (specifications == null || specifications.length == 0) {
-            throw new IllegalArgumentException("specifications must not be empty");
-        }
+    CompositeSpecification<T> remainderUnsatisfiedBy(T candidate);
 
-        // TODO validation
-        if (specifications.length == 1) {
-            getComponents().add(specifications[0]);
-        } else {
-            getComponents().addAll(asList(specifications));
+    default CompositeSpecification<T> with(final Specification<T> specification) {
+        if (specification == null) {
+            throw new IllegalArgumentException("specification must not be null");
         }
+        getComponents().add(specification);
         return this;
     }
 
-    // TODO should return CompositeSpecification<T> ??
-    Specification<T> remainderUnsatisfiedBy(T candidateObject);
+//    @Override
+//    default boolean isSatisfiedBy(final T candidate) {
+//        return remainderUnsatisfiedBy(candidate).getComponents().isEmpty();
+//    }
+//
+    @Override
+    default boolean isGeneralizationOf(final Specification<T> specification) {
+        return getComponents().stream().allMatch(s -> s.isGeneralizationOf(specification));
+    }
+
+    @Override
+    default boolean isSpecialCaseOf(final Specification<T> specification) {
+        return getComponents().stream().allMatch(s -> s.isSpecialCaseOf(specification));
+    }
 }

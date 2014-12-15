@@ -19,6 +19,7 @@ public abstract class AbstractRepositoryJpaImpl<T extends ReferenceObject<T, ID>
     protected final Class<T> entityClass;
     //protected final Class<ID> idClass;
 
+    @SuppressWarnings("unchecked")
     public AbstractRepositoryJpaImpl() {
         ParameterizedType parameterizedType
                 = getClass().getSimpleName().endsWith("$Proxy$_$$_WeldClientProxy")
