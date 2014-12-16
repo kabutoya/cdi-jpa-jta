@@ -17,7 +17,7 @@ public abstract class AbstractRepositoryJpaImpl<T extends ReferenceObject<T, ID>
     protected EntityManager em;
 
     protected final Class<T> entityClass;
-    //protected final Class<ID> idClass;
+    protected final Class<ID> idClass;
 
     @SuppressWarnings("unchecked")
     public AbstractRepositoryJpaImpl() {
@@ -26,7 +26,7 @@ public abstract class AbstractRepositoryJpaImpl<T extends ReferenceObject<T, ID>
                         ? (ParameterizedType) getClass().getSuperclass().getGenericSuperclass()
                         : (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass = (Class<T>) parameterizedType.getActualTypeArguments()[0];
-        //this.idClass = (Class<ID>) parameterizedType.getActualTypeArguments()[1];
+        this.idClass = (Class<ID>) parameterizedType.getActualTypeArguments()[1];
     }
 
     @Override

@@ -14,10 +14,14 @@ public interface Specification<T> {
     }
 
     default Specification<T> and(final Specification<T> specification) {
-        return new ConjunctionSpecification<T>().with(this).with(specification);
+        return (this instanceof ConjunctionSpecification)
+                ? ((ConjunctionSpecification<T>) this).with(specification)
+                : new ConjunctionSpecification<T>().with(this).with(specification);
     }
 
     default Specification<T> or(final Specification<T> specification) {
-        return new DisjunctionSpecification<T>().with(this).with(specification);
+        return (this instanceof DisjunctionSpecification)
+                ? ((DisjunctionSpecification<T>) this).with(specification)
+                : new DisjunctionSpecification<T>().with(this).with(specification);
     }
 }

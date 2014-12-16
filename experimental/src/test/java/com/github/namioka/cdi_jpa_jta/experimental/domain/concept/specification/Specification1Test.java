@@ -4,15 +4,12 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 @Slf4j
 public class Specification1Test {
-
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Test
     public void test_isSatisfiedBy() throws JsonProcessingException {
@@ -46,51 +43,53 @@ public class Specification1Test {
         assertThat("", symbolSpecification.isSatisfiedBy("@"), is(true));
         assertThat("", symbolSpecification.isSatisfiedBy(""), is(false));
 
-        //Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification.and(symbolSpecification));
         Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification).and(symbolSpecification);
-        //Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification, symbolSpecification);
-        //Specification<String> alphabetAndNumericAndSymbolSpecification = Specifications.and(alphabetSpecification, numericSpecification, symbolSpecification);
-        if (log.isDebugEnabled()) {
-            log.debug(alphabetAndNumericAndSymbolSpecification.toString());
-        }
+        System.out.println("A----------");
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("A0@"), is(true));
+        System.out.println("B----------");
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("A0"), is(false));
+        System.out.println("C----------");
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("A@"), is(false));
+        System.out.println("D----------");
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("0@"), is(false));
+        System.out.println("E----------");
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("A"), is(false));
+        System.out.println("F----------");
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("0"), is(false));
+        System.out.println("G----------");
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("@"), is(false));
+        System.out.println("H----------");
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy(""), is(false));
 
-        //Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification.or(symbolSpecification));
         Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification).or(symbolSpecification);
-        //Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification, symbolSpecification);
-        //Specification<String> alphabetOrNumericOrSymbolSpecification = Specifications.or(alphabetSpecification, numericSpecification, symbolSpecification);
-        if (log.isDebugEnabled()) {
-            log.debug(alphabetOrNumericOrSymbolSpecification.toString());
-        }
+        System.out.println("I----------");
         assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("A0@"), is(true));
+        System.out.println("J----------");
         assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("A0"), is(true));
+        System.out.println("K----------");
         assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("A@"), is(true));
+        System.out.println("L----------");
         assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("0@"), is(true));
+        System.out.println("M----------");
         assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("A"), is(true));
+        System.out.println("N----------");
         assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("0"), is(true));
+        System.out.println("O----------");
         assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("@"), is(true));
+        System.out.println("P----------");
         assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy(""), is(false));
     }
 
-    //@ToString
     private abstract static class StringTypeSpecification implements LeafSpecification<String> {
 
         protected Pattern p;
 
         @Override
         public boolean isSatisfiedBy(String candidateObject) {
-            return p.matcher((CharSequence) candidateObject).find();
+            return p.matcher(candidateObject).find();
         }
     }
 
-    //@ToString
     private static class AlphabetSpecification extends StringTypeSpecification {
 
         public AlphabetSpecification() {
@@ -99,17 +98,11 @@ public class Specification1Test {
         }
 
         @Override
-        public boolean isSpecialCaseOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
         public boolean isGeneralizationOf(Specification<String> specification) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 
-    //@ToString
     private static class NumericSpecification extends StringTypeSpecification {
 
         public NumericSpecification() {
@@ -118,27 +111,16 @@ public class Specification1Test {
         }
 
         @Override
-        public boolean isSpecialCaseOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet.");
-        }
-
-        @Override
         public boolean isGeneralizationOf(Specification<String> specification) {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 
-    //@ToString
     private static class SymbolSpecification extends StringTypeSpecification {
 
         public SymbolSpecification() {
             //p = Pattern.compile("^[@]+$");
             p = Pattern.compile("[@]");
-        }
-
-        @Override
-        public boolean isSpecialCaseOf(Specification<String> specification) {
-            throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
