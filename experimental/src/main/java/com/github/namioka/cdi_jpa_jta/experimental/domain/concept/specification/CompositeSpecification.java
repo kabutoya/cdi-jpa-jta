@@ -17,7 +17,7 @@ public interface CompositeSpecification<T> extends Specification<T> {
     }
 
     @Override
-    default boolean isSatisfiedBy(T candidate) {
+    default boolean isSatisfiedBy(final T candidate) {
         return (candidate == null)
                 ? false
                 : remainderUnsatisfiedBy(candidate).components().isEmpty();
