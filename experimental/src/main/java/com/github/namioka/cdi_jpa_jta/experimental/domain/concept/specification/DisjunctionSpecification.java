@@ -14,6 +14,7 @@ public class DisjunctionSpecification<T> implements CompositeSpecification<T> {
 
     @Override
     public CompositeSpecification<T> remainderUnsatisfiedBy(final T candidate) {
+        // TODO
         return getComponents().stream().filter(s -> s.isSatisfiedBy(candidate)).count() > 0
                 ? new DisjunctionSpecification<>()
                 : this;
@@ -21,11 +22,13 @@ public class DisjunctionSpecification<T> implements CompositeSpecification<T> {
 
     @Override
     public boolean isGeneralizationOf(final Specification<T> specification) {
+        // TODO
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public boolean isSpecialCaseOf(final Specification<T> specification) {
+        // TODO
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

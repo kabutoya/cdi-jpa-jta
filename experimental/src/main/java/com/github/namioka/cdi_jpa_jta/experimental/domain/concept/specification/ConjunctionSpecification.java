@@ -14,20 +14,23 @@ public class ConjunctionSpecification<T> implements CompositeSpecification<T> {
 
     @Override
     public CompositeSpecification<T> remainderUnsatisfiedBy(final T candidate) {
+        // TODO
         return getComponents().stream().filter(s -> !s.isSatisfiedBy(candidate))
                 .collect(() -> new ConjunctionSpecification<>(),
                         (x, y) -> x.with(y),
-                        (x, y) -> y.getComponents().stream().forEach(x::with) // TODO
+                        (x, y) -> y.getComponents().stream().forEach(x::with)
                 );
     }
 
     @Override
     public boolean isGeneralizationOf(final Specification<T> specification) {
+        // TODO
         return getComponents().stream().allMatch(s -> s.isGeneralizationOf(specification));
     }
 
     @Override
     public boolean isSpecialCaseOf(final Specification<T> specification) {
+        // TODO
         return getComponents().stream().allMatch(s -> s.isSpecialCaseOf(specification));
     }
 }
