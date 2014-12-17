@@ -30,7 +30,6 @@ public class Specification2Test {
         assertThat("", ABC__SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(true));
         assertThat("", ABC__SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(true));
         assertThat("", ABC__SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
-
         assertThat("", AB___SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
         assertThat("", AB___SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(true));
         assertThat("", AB___SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(false));
@@ -39,7 +38,6 @@ public class Specification2Test {
         assertThat("", AB___SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(true));
         assertThat("", AB___SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(false));
         assertThat("", AB___SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
-
         assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
         assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(false));
         assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(true));
@@ -48,7 +46,6 @@ public class Specification2Test {
         assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(false));
         assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(true));
         assertThat("", A_C__SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
-
         assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
         assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(false));
         assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(false));
@@ -57,7 +54,6 @@ public class Specification2Test {
         assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(true));
         assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(true));
         assertThat("", _BC__SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
-
         assertThat("", A____SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
         assertThat("", A____SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(false));
         assertThat("", A____SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(false));
@@ -66,7 +62,6 @@ public class Specification2Test {
         assertThat("", A____SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(false));
         assertThat("", A____SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(false));
         assertThat("", A____SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
-
         assertThat("", _B___SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
         assertThat("", _B___SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(false));
         assertThat("", _B___SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(false));
@@ -75,7 +70,6 @@ public class Specification2Test {
         assertThat("", _B___SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(true));
         assertThat("", _B___SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(false));
         assertThat("", _B___SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
-
         assertThat("", __C__SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
         assertThat("", __C__SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(false));
         assertThat("", __C__SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(false));
@@ -84,7 +78,6 @@ public class Specification2Test {
         assertThat("", __C__SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(false));
         assertThat("", __C__SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(true));
         assertThat("", __C__SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(false));
-
         assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(ABC__SPECIFICATION), is(false));
         assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(AB___SPECIFICATION), is(false));
         assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(A_C__SPECIFICATION), is(false));
@@ -105,7 +98,6 @@ public class Specification2Test {
         assertThat("", ABC__SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
         assertThat("", ABC__SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
         assertThat("", ABC__SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
-
         assertThat("", AB___SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
         assertThat("", AB___SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(true));
         assertThat("", AB___SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(false));
@@ -114,7 +106,6 @@ public class Specification2Test {
         assertThat("", AB___SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
         assertThat("", AB___SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
         assertThat("", AB___SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
-
         assertThat("", A_C__SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
         assertThat("", A_C__SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(false));
         assertThat("", A_C__SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(true));
@@ -123,7 +114,6 @@ public class Specification2Test {
         assertThat("", A_C__SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
         assertThat("", A_C__SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
         assertThat("", A_C__SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
-
         assertThat("", _BC__SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
         assertThat("", _BC__SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(false));
         assertThat("", _BC__SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(false));
@@ -132,7 +122,6 @@ public class Specification2Test {
         assertThat("", _BC__SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
         assertThat("", _BC__SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
         assertThat("", _BC__SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
-
         assertThat("", A____SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
         assertThat("", A____SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(true));
         assertThat("", A____SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(true));
@@ -141,7 +130,6 @@ public class Specification2Test {
         assertThat("", A____SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
         assertThat("", A____SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
         assertThat("", A____SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
-
         assertThat("", _B___SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
         assertThat("", _B___SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(true));
         assertThat("", _B___SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(false));
@@ -150,7 +138,6 @@ public class Specification2Test {
         assertThat("", _B___SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(true));
         assertThat("", _B___SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(false));
         assertThat("", _B___SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
-
         assertThat("", __C__SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(true));
         assertThat("", __C__SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(false));
         assertThat("", __C__SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(true));
@@ -159,7 +146,6 @@ public class Specification2Test {
         assertThat("", __C__SPECIFICATION.isGeneralizationOf(_B___SPECIFICATION), is(false));
         assertThat("", __C__SPECIFICATION.isGeneralizationOf(__C__SPECIFICATION), is(true));
         assertThat("", __C__SPECIFICATION.isGeneralizationOf(___X_SPECIFICATION), is(false));
-
         assertThat("", ___X_SPECIFICATION.isGeneralizationOf(ABC__SPECIFICATION), is(false));
         assertThat("", ___X_SPECIFICATION.isGeneralizationOf(AB___SPECIFICATION), is(false));
         assertThat("", ___X_SPECIFICATION.isGeneralizationOf(A_C__SPECIFICATION), is(false));
@@ -174,8 +160,8 @@ public class Specification2Test {
 
         @Getter
         private final String[] value;
-        //private final Pattern p;
 
+        //private final Pattern p;
         public AlphabetCharacterSpecification(String[] value) {
             this.value = value;
             //this.p = Pattern.compile(String.format("^[%s]+$", Stream.of(value).collect(joining())));
@@ -186,7 +172,6 @@ public class Specification2Test {
             throw new UnsupportedOperationException("Not supported yet.");
             //return p.matcher(candidateObject).find();
         }
-
 //        @Override
 //        public boolean isSpecialCaseOf(Specification<String> specification) {
 //            if (!(specification instanceof ValueBoundSpecification)) {
@@ -201,6 +186,7 @@ public class Specification2Test {
 //            return specification.isGeneralizationOf(this);
 //        }
 //
+
         @Override
         public boolean isGeneralizationOf(Specification<String> specification) {
             if (!(specification instanceof ValueBoundSpecification)) {

@@ -34,7 +34,6 @@ public class NamingRule extends ExternalResource {
         final InitialContext ic = new InitialContext();
         ic.createSubcontext("java:jboss");
         ic.createSubcontext("java:jboss/datasources");
-
         // com.arjuna.ats.jta.utils.JNDIManager.bindJTAImplementations(ic);
         // -> Actually the following...
         final String transactionManagerClassName = TransactionManagerImple.class.getName();
@@ -42,7 +41,6 @@ public class NamingRule extends ExternalResource {
         ic.bind("java:/TransactionManager", new Reference(transactionManagerClassName, transactionManagerClassName, null));
         ic.bind("java:/UserTransaction", new Reference(userTransactionClassName, userTransactionClassName, null));
         ic.bind("java:/TransactionSynchronizationRegistry", TransactionSynchronizationRegistryImple.class.newInstance());
-
 //        final DataSource ds = new EmbeddedDataSource();
 //        ((EmbeddedDataSource) ds).setDatabaseName("memory:test_DB;create=true");
 //        ic.bind("java:/test_DS", ds);

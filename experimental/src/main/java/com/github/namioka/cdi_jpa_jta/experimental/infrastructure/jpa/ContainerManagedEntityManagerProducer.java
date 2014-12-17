@@ -15,10 +15,8 @@ import org.slf4j.Logger;
 public class ContainerManagedEntityManagerProducer {
 
     private static final String PERSISTENCE_UNIT_NAME = "test_PU"; // TODO inject
-
     @Inject
     private Logger logger;
-
     @PersistenceContext(unitName = PERSISTENCE_UNIT_NAME)
     private EntityManager em;
 

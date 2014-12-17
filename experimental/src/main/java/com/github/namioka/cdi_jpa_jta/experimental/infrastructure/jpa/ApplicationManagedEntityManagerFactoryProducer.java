@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 public class ApplicationManagedEntityManagerFactoryProducer {
 
     private static final String PERSISTENCE_UNIT_NAME = "test_PU"; // TODO inject
-
     @Inject
     private Logger logger;
 

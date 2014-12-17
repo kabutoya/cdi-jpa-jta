@@ -12,7 +12,6 @@ import lombok.ToString;
 public class TestValue implements ValueObject<TestValue> {
 
     private static final long serialVersionUID = 1L;
-
     @NotNull
     private String value1;
     @NotNull

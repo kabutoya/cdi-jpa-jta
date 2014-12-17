@@ -22,7 +22,6 @@ public class Specification1Test {
         assertThat("", alphabetSpecification.isSatisfiedBy("0"), is(false));
         assertThat("", alphabetSpecification.isSatisfiedBy("@"), is(false));
         assertThat("", alphabetSpecification.isSatisfiedBy(""), is(false));
-
         NumericSpecification numericSpecification = new NumericSpecification();
         assertThat("", numericSpecification.isSatisfiedBy("A0@"), is(true));
         assertThat("", numericSpecification.isSatisfiedBy("A0"), is(true));
@@ -32,7 +31,6 @@ public class Specification1Test {
         assertThat("", numericSpecification.isSatisfiedBy("0"), is(true));
         assertThat("", numericSpecification.isSatisfiedBy("@"), is(false));
         assertThat("", numericSpecification.isSatisfiedBy(""), is(false));
-
         SymbolSpecification symbolSpecification = new SymbolSpecification();
         assertThat("", symbolSpecification.isSatisfiedBy("A0@"), is(true));
         assertThat("", symbolSpecification.isSatisfiedBy("A0"), is(false));
@@ -42,7 +40,6 @@ public class Specification1Test {
         assertThat("", symbolSpecification.isSatisfiedBy("0"), is(false));
         assertThat("", symbolSpecification.isSatisfiedBy("@"), is(true));
         assertThat("", symbolSpecification.isSatisfiedBy(""), is(false));
-
         Specification<String> alphabetAndNumericAndSymbolSpecification = alphabetSpecification.and(numericSpecification).and(symbolSpecification);
         System.out.println("A----------");
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("A0@"), is(true));
@@ -60,7 +57,6 @@ public class Specification1Test {
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy("@"), is(false));
         System.out.println("H----------");
         assertThat("", alphabetAndNumericAndSymbolSpecification.isSatisfiedBy(""), is(false));
-
         Specification<String> alphabetOrNumericOrSymbolSpecification = alphabetSpecification.or(numericSpecification).or(symbolSpecification);
         System.out.println("I----------");
         assertThat("", alphabetOrNumericOrSymbolSpecification.isSatisfiedBy("A0@"), is(true));

@@ -19,7 +19,6 @@ public class ApplicationManagedEntityManagerProducer {
 
     @Inject
     private Logger logger;
-
     @Inject
     private EntityManagerFactory emf;
 

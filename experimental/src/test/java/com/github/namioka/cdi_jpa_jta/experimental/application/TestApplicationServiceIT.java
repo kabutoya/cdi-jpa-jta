@@ -29,7 +29,6 @@ public class TestApplicationServiceIT {
         System.out.println(war.toString(true));
         return war;
     }
-
     @Inject
     private TestApplicationService testApplicationService;
 

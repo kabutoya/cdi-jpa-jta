@@ -1,7 +1,6 @@
 package com.github.namioka.cdi_jpa_jta.experimental.domain.concept.specification;
 
 public class CompositeSpecificationTest {
-
 //    private static final DummySpecification[] NULL = null;
 //    private static final DummySpecification[] EMPTY = new DummySpecification[0];
 //    private static final DummySpecification[] ONE = new DummySpecification[]{new DummySpecification()};
