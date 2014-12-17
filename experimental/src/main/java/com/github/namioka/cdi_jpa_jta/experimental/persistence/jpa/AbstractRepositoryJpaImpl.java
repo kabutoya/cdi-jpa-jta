@@ -1,6 +1,6 @@
 package com.github.namioka.cdi_jpa_jta.experimental.persistence.jpa;
 
-import com.github.namioka.cdi_jpa_jta.experimental.domain.concept.ReferenceObject;
+import com.github.namioka.cdi_jpa_jta.experimental.domain.concept.AggregateRoot;
 import com.github.namioka.cdi_jpa_jta.experimental.domain.concept.Repository;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -11,11 +11,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-public abstract class AbstractRepositoryJpaImpl<T extends ReferenceObject<T, ID>, ID extends Serializable> implements Repository<T, ID> {
+public abstract class AbstractRepositoryJpaImpl<T extends AggregateRoot<T, ID>, ID extends Serializable> implements Repository<T, ID> {
 
     @Inject
     protected EntityManager em;
-
     protected final Class<T> entityClass;
     protected final Class<ID> idClass;
 
@@ -42,7 +41,6 @@ public abstract class AbstractRepositoryJpaImpl<T extends ReferenceObject<T, ID>
     @Override
     public List<T> findAll() {
         //return em.createQuery(String.format("select x from %s x", entityClass.getName()), entityClass).getResultList();
-
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(entityClass);
         Root<T> r = cq.from(entityClass);
@@ -53,7 +51,6 @@ public abstract class AbstractRepositoryJpaImpl<T extends ReferenceObject<T, ID>
     public T find(final ID id) {
         return em.find(entityClass, id);
     }
-
 //    @Override
 //    public <S extends T> List<S> save(List<S> entities) {
 //        throw new UnsupportedOperationException("Not supported yet.");

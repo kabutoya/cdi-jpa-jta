@@ -1,6 +1,6 @@
 package com.github.namioka.cdi_jpa_jta.experimental.domain.generic_sub.model.test;
 
-import com.github.namioka.cdi_jpa_jta.experimental.domain.concept.ReferenceObject;
+import com.github.namioka.cdi_jpa_jta.experimental.domain.concept.AggregateRoot;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,16 +15,13 @@ import lombok.ToString;
 
 @Entity
 @EqualsAndHashCode @ToString @Getter
-public class Test implements ReferenceObject<Test, Long> {
+public class Test implements AggregateRoot<Test, Long> {
 
     private static final long serialVersionUID = 1L;
-
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @Version
     private Long version;
-
     @Embedded
     @Valid
     @Setter
