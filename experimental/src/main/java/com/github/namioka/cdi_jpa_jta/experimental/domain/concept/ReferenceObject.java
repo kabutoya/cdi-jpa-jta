@@ -10,9 +10,7 @@ public interface ReferenceObject<T extends ReferenceObject<T, ID>, ID extends Se
         return getId() == null;
     }
 
-    default boolean sameIdentityAs(final T other) {
-        return (isNew() || other == null || other.isNew())
-                ? false
-                : getId().equals(other.getId());
+    default boolean isSameIdentityAs(final T other) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

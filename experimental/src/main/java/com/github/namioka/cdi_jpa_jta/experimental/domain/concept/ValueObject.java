@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public interface ValueObject<T extends ValueObject<T>> extends Serializable, Cloneable {
 
-    default boolean sameValueAs(final T other) {
+    default boolean isSameValueAs(final T other) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

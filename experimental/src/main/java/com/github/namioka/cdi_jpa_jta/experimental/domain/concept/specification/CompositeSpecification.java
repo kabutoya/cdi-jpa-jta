@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CompositeSpecification<T> extends Specification<T> {
 
-    List<Specification<T>> components();
+    List<Specification<T>> getComponents();
 
     CompositeSpecification<T> remainderUnsatisfiedBy(T candidate);
 
@@ -12,7 +12,7 @@ public interface CompositeSpecification<T> extends Specification<T> {
         if (specification == null) {
             throw new IllegalArgumentException("specification must not be null");
         }
-        components().add(specification);
+        getComponents().add(specification);
         return this;
     }
 
@@ -20,16 +20,6 @@ public interface CompositeSpecification<T> extends Specification<T> {
     default boolean isSatisfiedBy(final T candidate) {
         return (candidate == null)
                 ? false
-                : remainderUnsatisfiedBy(candidate).components().isEmpty();
+                : remainderUnsatisfiedBy(candidate).getComponents().isEmpty();
     }
-
-//    @Override
-//    default boolean isGeneralizationOf(final Specification<T> specification) {
-//        return components().stream().allMatch(s -> s.isGeneralizationOf(specification));
-//    }
-//
-//    @Override
-//    default boolean isSpecialCaseOf(final Specification<T> specification) {
-//        return components().stream().allMatch(s -> s.isSpecialCaseOf(specification));
-//    }
 }

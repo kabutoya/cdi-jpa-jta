@@ -8,13 +8,13 @@ public class DisjunctionSpecification<T> implements CompositeSpecification<T> {
     private final List<Specification<T>> components = new ArrayList<>();
 
     @Override
-    public List<Specification<T>> components() {
+    public List<Specification<T>> getComponents() {
         return components;
     }
 
     @Override
     public CompositeSpecification<T> remainderUnsatisfiedBy(final T candidate) {
-        return components().stream().filter(s -> s.isSatisfiedBy(candidate)).count() > 0
+        return getComponents().stream().filter(s -> s.isSatisfiedBy(candidate)).count() > 0
                 ? new DisjunctionSpecification<>()
                 : this;
     }
