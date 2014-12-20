@@ -10,6 +10,13 @@ import org.junit.Test;
 @Slf4j
 public class SpecificationTest {
 
+    private static final TestableSpecification ALPHABET_SPECIFICATION = new TestableSpecification(new String[]{"A"});
+    private static final TestableSpecification NUMERIC_SPECIFICATION = new TestableSpecification(new String[]{"0"});
+    private static final TestableSpecification SYMBOL_SPECIFICATION = new TestableSpecification(new String[]{"#"});
+    private static final Specification<String> ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION = ALPHABET_SPECIFICATION.and(NUMERIC_SPECIFICATION).and(SYMBOL_SPECIFICATION);
+    private static final Specification<String> ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION = ALPHABET_SPECIFICATION.and(NUMERIC_SPECIFICATION).or(SYMBOL_SPECIFICATION);
+    private static final Specification<String> ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION = ALPHABET_SPECIFICATION.or(NUMERIC_SPECIFICATION).and(SYMBOL_SPECIFICATION);
+    private static final Specification<String> ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION = ALPHABET_SPECIFICATION.or(NUMERIC_SPECIFICATION).or(SYMBOL_SPECIFICATION);
     private static final TestableSpecification ABC__SPECIFICATION = new TestableSpecification(new String[]{"A", "B", "C"});
     private static final TestableSpecification AB___SPECIFICATION = new TestableSpecification(new String[]{"A", "B"});
     private static final TestableSpecification A_C__SPECIFICATION = new TestableSpecification(new String[]{"A", "C"});
@@ -18,6 +25,73 @@ public class SpecificationTest {
     private static final TestableSpecification _B___SPECIFICATION = new TestableSpecification(new String[]{"B"});
     private static final TestableSpecification __C__SPECIFICATION = new TestableSpecification(new String[]{"C"});
     private static final TestableSpecification ___X_SPECIFICATION = new TestableSpecification(new String[]{"X"});
+
+    @Test
+    public void test_isSatisfiedBy() {
+        // alphabet
+        assertThat("", ALPHABET_SPECIFICATION.isSatisfiedBy("A0#"), is(true));
+        assertThat("", ALPHABET_SPECIFICATION.isSatisfiedBy("A0"), is(true));
+        assertThat("", ALPHABET_SPECIFICATION.isSatisfiedBy("0#"), is(false));
+        assertThat("", ALPHABET_SPECIFICATION.isSatisfiedBy("A#"), is(true));
+        assertThat("", ALPHABET_SPECIFICATION.isSatisfiedBy("A"), is(true));
+        assertThat("", ALPHABET_SPECIFICATION.isSatisfiedBy("0"), is(false));
+        assertThat("", ALPHABET_SPECIFICATION.isSatisfiedBy("#"), is(false));
+        assertThat("", ALPHABET_SPECIFICATION.isSatisfiedBy(""), is(false));
+        // numeric
+        assertThat("", NUMERIC_SPECIFICATION.isSatisfiedBy("A0#"), is(true));
+        assertThat("", NUMERIC_SPECIFICATION.isSatisfiedBy("A0"), is(true));
+        assertThat("", NUMERIC_SPECIFICATION.isSatisfiedBy("0#"), is(true));
+        assertThat("", NUMERIC_SPECIFICATION.isSatisfiedBy("A#"), is(false));
+        assertThat("", NUMERIC_SPECIFICATION.isSatisfiedBy("A"), is(false));
+        assertThat("", NUMERIC_SPECIFICATION.isSatisfiedBy("0"), is(true));
+        assertThat("", NUMERIC_SPECIFICATION.isSatisfiedBy("#"), is(false));
+        assertThat("", NUMERIC_SPECIFICATION.isSatisfiedBy(""), is(false));
+        // symbol
+        assertThat("", SYMBOL_SPECIFICATION.isSatisfiedBy("A0#"), is(true));
+        assertThat("", SYMBOL_SPECIFICATION.isSatisfiedBy("A0"), is(false));
+        assertThat("", SYMBOL_SPECIFICATION.isSatisfiedBy("0#"), is(true));
+        assertThat("", SYMBOL_SPECIFICATION.isSatisfiedBy("A#"), is(true));
+        assertThat("", SYMBOL_SPECIFICATION.isSatisfiedBy("A"), is(false));
+        assertThat("", SYMBOL_SPECIFICATION.isSatisfiedBy("0"), is(false));
+        assertThat("", SYMBOL_SPECIFICATION.isSatisfiedBy("#"), is(true));
+        assertThat("", SYMBOL_SPECIFICATION.isSatisfiedBy(""), is(false));
+        // alphabet and numeric and symbol
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A0#"), is(true));
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A0"), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("0#"), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A#"), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A"), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("0"), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("#"), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy(""), is(false));
+        // (alphabet and numeric) or symbol
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("A0#"), is(true));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("A0"), is(true));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("0#"), is(true));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("A#"), is(true));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("A"), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("0"), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("#"), is(true));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy(""), is(false));
+        // (alphabet or numeric) and symbol
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A0#"), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A0"), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("0#"), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A#"), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A"), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("0"), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("#"), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy(""), is(false));
+        // alphabet or numeric or symbol
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("A0#"), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("A0"), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("0#"), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("A#"), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("A"), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("0"), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy("#"), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy(""), is(false));
+    }
 
     @Test
     public void test_isSpecialCaseOf() {
@@ -85,6 +159,62 @@ public class SpecificationTest {
         assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(_B___SPECIFICATION), is(false));
         assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(__C__SPECIFICATION), is(false));
         assertThat("", ___X_SPECIFICATION.isSpecialCaseOf(___X_SPECIFICATION), is(true));
+        //
+        assertThat("", ALPHABET_SPECIFICATION.isSpecialCaseOf(ALPHABET_SPECIFICATION), is(true));
+        assertThat("", ALPHABET_SPECIFICATION.isSpecialCaseOf(NUMERIC_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_SPECIFICATION.isSpecialCaseOf(SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION), is(true));
+        //
+        assertThat("", NUMERIC_SPECIFICATION.isSpecialCaseOf(ALPHABET_SPECIFICATION), is(false));
+        assertThat("", NUMERIC_SPECIFICATION.isSpecialCaseOf(NUMERIC_SPECIFICATION), is(true));
+        assertThat("", NUMERIC_SPECIFICATION.isSpecialCaseOf(SYMBOL_SPECIFICATION), is(false));
+        assertThat("", NUMERIC_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", NUMERIC_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", NUMERIC_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", NUMERIC_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION), is(true));
+        //
+        assertThat("", SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_SPECIFICATION), is(false));
+        assertThat("", SYMBOL_SPECIFICATION.isSpecialCaseOf(NUMERIC_SPECIFICATION), is(false));
+        assertThat("", SYMBOL_SPECIFICATION.isSpecialCaseOf(SYMBOL_SPECIFICATION), is(true));
+        assertThat("", SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION), is(true));
+        assertThat("", SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION), is(true));
+        //
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(NUMERIC_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false)); // TODO
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION), is(false));
+        //
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(NUMERIC_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION), is(true));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION), is(true));
+        //
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(NUMERIC_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION), is(true));
+        //
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_SPECIFICATION), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(NUMERIC_SPECIFICATION), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(SYMBOL_SPECIFICATION), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION), is(true));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION.isSpecialCaseOf(ALPHABET_OR_NUMERIC_OR_SYMBOL_SPECIFICATION), is(true));
     }
 
     @Test
