@@ -46,4 +46,11 @@ public class DisjunctionSpecification<T> implements CompositeSpecification<T> {
 //    public boolean isSpecialCaseOf(final Specification<T> specification) {
 //        return getComponents().stream().anyMatch(s -> s.isSpecialCaseOf(specification));
 //    }
+
+    Specification<T> poll() {
+        final int tail = components.size() - 1;
+        final Specification<T> component = components.get(tail);
+        components.remove(tail);
+        return component;
+    }
 }

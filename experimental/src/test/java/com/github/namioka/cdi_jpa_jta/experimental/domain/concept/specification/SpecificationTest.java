@@ -75,10 +75,10 @@ public class SpecificationTest {
         assertThat("", ALPHABET_AND_NUMERIC_OR_SYMBOL_SPECIFICATION.isSatisfiedBy(""), is(false));
         // (alphabet or numeric) and symbol
         assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A0#"), is(true));
-        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A0"), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A0"), is(true));
         assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("0#"), is(true));
         assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A#"), is(true));
-        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A"), is(false));
+        assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("A"), is(true));
         assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("0"), is(false));
         assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy("#"), is(false));
         assertThat("", ALPHABET_OR_NUMERIC_AND_SYMBOL_SPECIFICATION.isSatisfiedBy(""), is(false));

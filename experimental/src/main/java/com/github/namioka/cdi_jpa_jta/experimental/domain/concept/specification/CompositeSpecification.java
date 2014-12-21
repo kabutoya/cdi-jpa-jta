@@ -22,4 +22,12 @@ public interface CompositeSpecification<T> extends Specification<T> {
                 ? false
                 : remainderUnsatisfiedBy(candidate).getComponents().isEmpty();
     }
+
+//    default Specification<T> poll() {
+//        final List<Specification<T>> components = getComponents();
+//        final int tail = components.size() - 1;
+//        final Specification<T> component = components.get(tail);
+//        components.remove(tail);
+//        return component;
+//    }
 }
