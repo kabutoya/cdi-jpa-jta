@@ -1,5 +1,7 @@
 package com.github.namioka.cdi_jpa_jta.experimental.domain.concept.specification;
 
+import static java.util.stream.Collectors.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -18,39 +20,30 @@ public class DisjunctionSpecification<T> implements CompositeSpecification<T> {
     @Override
     public CompositeSpecification<T> remainderUnsatisfiedBy(final T candidate) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("#remainderUnsatisfiedBy candidate --[{}]--", candidate);
+            LOGGER.debug("remainderUnsatisfiedBy candidate --[{}]--", candidate);
         }
         return getComponents().stream()
                 .peek(s -> {
                     if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("#remainderUnsatisfiedBy {}", s);
+                        LOGGER.debug("remainderUnsatisfiedBy {}", s);
                     }
                 })
                 .filter(s -> s.isSatisfiedBy(candidate))
                 .peek(s -> {
                     if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("#remainderUnsatisfiedBy -> satisfied {}", s);
+                        LOGGER.debug("remainderUnsatisfiedBy -> satisfied {}", s);
                     }
                 })
-                .count() > 0
-                        ? new DisjunctionSpecification<>()
-                        : this;
+                .count() == 0 ? this : new DisjunctionSpecification<>();
     }
 
     @Override
     public boolean isGeneralizationOf(final Specification<T> specification) {
         return getComponents().stream().anyMatch(s -> s.isGeneralizationOf(specification));
     }
-//
-//    @Override
-//    public boolean isSpecialCaseOf(final Specification<T> specification) {
-//        return getComponents().stream().anyMatch(s -> s.isSpecialCaseOf(specification));
-//    }
 
-    Specification<T> poll() {
-        final int tail = components.size() - 1;
-        final Specification<T> component = components.get(tail);
-        components.remove(tail);
-        return component;
+    @Override
+    public String toString() {
+        return getComponents().stream().map(s -> s.toString()).collect(joining(" || ", "(", ")"));
     }
 }
