@@ -1,5 +1,7 @@
 package com.github.namioka.cdi_jpa_jta.experimental.domain.concept.specification;
 
+import java.util.List;
+
 public interface Specification<T> {
 
     boolean isSatisfiedBy(T candidate);
@@ -22,9 +24,9 @@ public interface Specification<T> {
                 return ((ConjunctionSpecification<T>) this).with(specification);
             }
             if (this instanceof DisjunctionSpecification) {
-                final DisjunctionSpecification<T> real = (DisjunctionSpecification<T>) this;
-                final Specification<T> tail = real.getComponents().remove(real.getComponents().size() - 1);
-                return real.with(tail.and(specification));
+                final List<Specification<T>> components = ((DisjunctionSpecification<T>) this).getComponents();
+                final Specification<T> tail = components.remove(components.size() - 1);
+                return ((DisjunctionSpecification<T>) this).with(tail.and(specification));
             }
             throw new UnsupportedOperationException(this.getClass().getName());
         } else {
