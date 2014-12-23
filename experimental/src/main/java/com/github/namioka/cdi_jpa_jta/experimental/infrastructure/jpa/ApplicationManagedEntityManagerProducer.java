@@ -45,13 +45,13 @@ public class ApplicationManagedEntityManagerProducer {
 
         private final EntityManager em;
 
+        public EntityManagerProxy(EntityManager em) {
+            this.em = em;
+        }
+
         public static EntityManager newProxyInstance(EntityManager em) {
             return (EntityManager) Proxy.newProxyInstance(
                     em.getClass().getClassLoader(), new Class<?>[]{EntityManager.class}, new EntityManagerProxy(em));
-        }
-
-        public EntityManagerProxy(EntityManager em) {
-            this.em = em;
         }
 
         @Override

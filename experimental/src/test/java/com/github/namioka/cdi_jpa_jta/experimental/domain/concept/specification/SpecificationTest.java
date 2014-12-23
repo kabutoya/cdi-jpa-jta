@@ -14,20 +14,17 @@ import org.junit.rules.TestName;
 @Slf4j
 public class SpecificationTest {
 
-    // Leaf
+    @Rule
+    public TestName name = new TestName();
     private static final Specification<String> CONTAINS_ALPHABET = new TestableSpecification(new String[]{"A"});
     private static final Specification<String> CONTAINS_NUMERIC = new TestableSpecification(new String[]{"0"});
     private static final Specification<String> CONTAINS_SYMBOL = new TestableSpecification(new String[]{"#"});
-    // Composite(2)
     private static final Specification<String> CONTAINS_ALPHABET_AND_NUMERIC = CONTAINS_ALPHABET.and(CONTAINS_NUMERIC);
     private static final Specification<String> CONTAINS_ALPHABET_OR_NUMERIC = CONTAINS_ALPHABET.or(CONTAINS_NUMERIC);
-    // Composite(3)
     private static final Specification<String> CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL = CONTAINS_ALPHABET.and(CONTAINS_NUMERIC).and(CONTAINS_SYMBOL);
     private static final Specification<String> CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL = CONTAINS_ALPHABET.and(CONTAINS_NUMERIC).or(CONTAINS_SYMBOL);
     private static final Specification<String> CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL = CONTAINS_ALPHABET.or(CONTAINS_NUMERIC).and(CONTAINS_SYMBOL);
     private static final Specification<String> CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL = CONTAINS_ALPHABET.or(CONTAINS_NUMERIC).or(CONTAINS_SYMBOL);
-    //
-    //
     private static final Specification<String> ABC_ = new TestableSpecification(new String[]{"A", "B", "C"});
     private static final Specification<String> AB__ = new TestableSpecification(new String[]{"A", "B"});
     private static final Specification<String> A_C_ = new TestableSpecification(new String[]{"A", "C"});
@@ -36,8 +33,6 @@ public class SpecificationTest {
     private static final Specification<String> _B__ = new TestableSpecification(new String[]{"B"});
     private static final Specification<String> __C_ = new TestableSpecification(new String[]{"C"});
     private static final Specification<String> ___X = new TestableSpecification(new String[]{"X"});
-    @Rule
-    public TestName name = new TestName();
 
     @Before
     public void before() {
@@ -218,77 +213,118 @@ public class SpecificationTest {
         assertThat("", CONTAINS_ALPHABET.isSpecialCaseOf(CONTAINS_SYMBOL), is(false));
         assertThat("", CONTAINS_ALPHABET.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC), is(false));
         assertThat("", CONTAINS_ALPHABET.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC), is(true));
-//        assertThat("", CONTAINS_ALPHABET.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(false));
-//        assertThat("", CONTAINS_ALPHABET.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(false));
-//        assertThat("", CONTAINS_ALPHABET.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(true));
-//        assertThat("", CONTAINS_ALPHABET.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(true));
+        assertThat("", CONTAINS_ALPHABET.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(false));
+        assertThat("", CONTAINS_ALPHABET.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(false));
+        assertThat("", CONTAINS_ALPHABET.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(true));
+        assertThat("", CONTAINS_ALPHABET.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(true));
         //
         assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET), is(false));
         assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_NUMERIC), is(true));
         assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_SYMBOL), is(false));
         assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC), is(false));
         assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC), is(true));
-//        assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(false));
-//        assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(false));
-//        assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(false));
-//        assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(true));
+        assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(false));
+        assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(false));
+        assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(false));
+        assertThat("", CONTAINS_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(true));
         //
         assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET), is(false));
         assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_NUMERIC), is(false));
         assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_SYMBOL), is(true));
         assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC), is(false));
         assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC), is(false));
-//        assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(false));
-//        assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(true));
-//        assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(false));
-//        assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(true));
+        assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(false));
+        assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(true));
+        assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(false));
+        assertThat("", CONTAINS_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(true));
         //
         assertThat("", CONTAINS_ALPHABET_AND_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET), is(true));
         assertThat("", CONTAINS_ALPHABET_AND_NUMERIC.isSpecialCaseOf(CONTAINS_NUMERIC), is(true));
         assertThat("", CONTAINS_ALPHABET_AND_NUMERIC.isSpecialCaseOf(CONTAINS_SYMBOL), is(false));
         assertThat("", CONTAINS_ALPHABET_AND_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC), is(true));
         assertThat("", CONTAINS_ALPHABET_AND_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC), is(true));
-        //
         assertThat("", CONTAINS_ALPHABET_OR_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET), is(false));
         assertThat("", CONTAINS_ALPHABET_OR_NUMERIC.isSpecialCaseOf(CONTAINS_NUMERIC), is(false));
         assertThat("", CONTAINS_ALPHABET_OR_NUMERIC.isSpecialCaseOf(CONTAINS_SYMBOL), is(false));
         assertThat("", CONTAINS_ALPHABET_OR_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC), is(false));
         assertThat("", CONTAINS_ALPHABET_OR_NUMERIC.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC), is(true));
-//        //
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET), is(false));
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_NUMERIC), is(false));
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_SYMBOL), is(false));
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(true));
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(false));
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(false));
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(false));
-//        //
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET), is(false));
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_NUMERIC), is(false));
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_SYMBOL), is(true));
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(false));
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(true));
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(false));
-//        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(true));
-//        //
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET), is(true));
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_NUMERIC), is(false));
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_SYMBOL), is(false));
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(false));
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(false));
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(true));
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(true));
-//        //
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET), is(true));
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_NUMERIC), is(true));
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_SYMBOL), is(true));
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(true));
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(true));
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(true));
-//        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(true));
+        //
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET), is(true));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_NUMERIC), is(true));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_SYMBOL), is(true));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC), is(true));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC), is(true));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(true));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(true));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(true));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(true));
+        //
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET), is(false));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_NUMERIC), is(false));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_SYMBOL), is(false));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(false));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(true));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(false));
+        assertThat("", CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(false));
+        //
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET), is(false));
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_NUMERIC), is(false));
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_SYMBOL), is(false));
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(false));
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(false));
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(true));
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(false));
+        //
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET), is(false));
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_NUMERIC), is(false));
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_SYMBOL), is(false));
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_AND_SYMBOL), is(false));
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_AND_NUMERIC_OR_SYMBOL), is(false));
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_AND_SYMBOL), is(false));
+        assertThat("", CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL.isSpecialCaseOf(CONTAINS_ALPHABET_OR_NUMERIC_OR_SYMBOL), is(true));
     }
 
     @Test
     public void test_isGeneralizationOf() {
+    }
+    private static final Specification<String> A = new TestableSpecification(new String[]{"A"});
+    private static final Specification<String> B = new TestableSpecification(new String[]{"B"});
+    private static final Specification<String> C = new TestableSpecification(new String[]{"C"});
+    private static final Specification<String> D = new TestableSpecification(new String[]{"D"});
+    private static final Specification<String> E = new TestableSpecification(new String[]{"E"});
+
+    @Test
+    public void test_composition_4and_0or() {
+        assertThat("", A.and(B).and(C).and(D).and(E).toString(), is(equalTo("(A && B && C && D && E)")));
+    }
+
+    @Test
+    public void test_composition_3and_1or() {
+        assertThat("", A.or(B).and(C).and(D).and(E).toString(), is(equalTo("(A || (B && C && D && E))")));
+        assertThat("", A.and(B).or(C).and(D).and(E).toString(), is(equalTo("((A && B) || (C && D && E))")));
+        assertThat("", A.and(B).and(C).or(D).and(E).toString(), is(equalTo("((A && B && C) || (D && E))")));
+        assertThat("", A.and(B).and(C).and(D).or(E).toString(), is(equalTo("((A && B && C && D) || E)")));
+    }
+
+    @Test
+    public void test_composition_2and_2or() {
+        assertThat("", A.or(B).or(C).and(D).and(E).toString(), is(equalTo("(A || B || (C && D && E))")));
+        assertThat("", A.or(B).and(C).or(D).and(E).toString(), is(equalTo("(A || (B && C) || (D && E))")));
+        assertThat("", A.or(B).and(C).and(D).or(E).toString(), is(equalTo("(A || (B && C && D) || E)")));
+        assertThat("", A.and(B).or(C).or(D).and(E).toString(), is(equalTo("((A && B) || C || (D && E))")));
+        assertThat("", A.and(B).or(C).and(D).or(E).toString(), is(equalTo("((A && B) || (C && D) || E)")));
+        assertThat("", A.and(B).and(C).or(D).or(E).toString(), is(equalTo("((A && B && C) || D || E)")));
+    }
+
+    @Test
+    public void test_composition_1and_3or() {
+        assertThat("", A.or(B).or(C).or(D).and(E).toString(), is(equalTo("(A || B || C || (D && E))")));
+        assertThat("", A.or(B).or(C).and(D).or(E).toString(), is(equalTo("(A || B || (C && D) || E)")));
+        assertThat("", A.and(B).or(C).or(D).or(E).toString(), is(equalTo("((A && B) || C || D || E)")));
+    }
+
+    @Test
+    public void test_composition_0and_4or() {
+        assertThat("", A.or(B).or(C).or(D).or(E).toString(), is(equalTo("(A || B || C || D || E)")));
     }
 }
